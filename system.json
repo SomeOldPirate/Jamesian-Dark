@@ -2,7 +2,7 @@
   "id": "jamesian-dark",
   "title": "Jamesian Dark",
   "description": "<p>Ghost stories in the manner of M. R. James. A one-page hack of Graham Walmsley's Cthulhu Dark: you play bookish people who disturb something that should have been left alone.</p>",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "compatibility": {
     "minimum": "14",
     "verified": "14.367"
