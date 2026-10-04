@@ -1,0 +1,45 @@
+<section class="tab jd-tab {{tab.cssClass}}" data-group="primary" data-tab="clues">
+  <section class="jd-panel">
+    <header class="jd-panel__head">
+      <h3>{{localize "JD.Warning.heading"}}</h3>
+      <a class="jd-panel__control" data-action="listAdd" data-list="warnings" data-tooltip="{{localize 'JD.Sheet.add'}}"><i class="fa-solid fa-plus"></i></a>
+    </header>
+    <p class="jd-hint">{{localize "JD.Warning.hint"}}</p>
+    <ul class="jd-list">
+      {{#each warnings}}
+      <li class="jd-list__row">
+        <input type="text" data-list="warnings" data-index="{{index}}" data-prop="text" value="{{text}}" placeholder="{{localize 'JD.Warning.placeholder'}}">
+        <a class="jd-list__control" data-action="listRemove" data-list="warnings" data-index="{{index}}" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>
+      </li>
+      {{else}}
+      <li class="jd-empty">{{localize "JD.Warning.none"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="jd-panel">
+    <header class="jd-panel__head">
+      <h3>{{localize "JD.Provenance.heading"}} <small>{{system.provenanceFound}} / {{provenance.length}}</small></h3>
+      <a class="jd-panel__control" data-action="listAdd" data-list="provenance" data-tooltip="{{localize 'JD.Sheet.add'}}"><i class="fa-solid fa-plus"></i></a>
+    </header>
+    <p class="jd-hint">{{localize "JD.Provenance.hint"}}</p>
+    <ol class="jd-provenance">
+      {{#each provenance}}
+      <li class="jd-provenance__item{{#if found}} is-found{{/if}}">
+        <span class="jd-provenance__n">{{number}}</span>
+        <div class="jd-provenance__body">
+          <input type="text" data-list="provenance" data-index="{{index}}" data-prop="title" value="{{title}}" placeholder="{{localize 'JD.Provenance.titlePlaceholder'}}">
+          <textarea rows="2" data-list="provenance" data-index="{{index}}" data-prop="text" placeholder="{{localize 'JD.Provenance.textPlaceholder'}}">{{text}}</textarea>
+        </div>
+        <div class="jd-provenance__controls">
+          <label class="jd-check">
+            <input type="checkbox" data-list="provenance" data-index="{{index}}" data-prop="found" {{#if found}}checked{{/if}}> {{localize "JD.Provenance.found"}}
+          </label>
+          <a class="jd-list__control" data-action="revealProvenance" data-index="{{index}}" data-tooltip="{{localize 'JD.Provenance.reveal'}}"><i class="fa-solid fa-comment-dots"></i></a>
+          <a class="jd-list__control" data-action="listRemove" data-list="provenance" data-index="{{index}}" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>
+        </div>
+      </li>
+      {{/each}}
+    </ol>
+  </section>
+</section>

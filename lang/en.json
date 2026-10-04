@@ -1,0 +1,261 @@
+{
+  "TYPES": {
+    "Actor": { "investigator": "Investigator", "haunting": "Haunting" },
+    "Item": { "curio": "Curio" }
+  },
+  "JD": {
+    "Sheet": {
+      "investigator": "Investigator's Notebook",
+      "haunting": "The Haunting (GM)",
+      "curio": "Curio Label",
+      "name": "Name",
+      "occupation": "Occupation",
+      "occupationHint": "Professor of Ontography",
+      "interest": "Scholarly interest",
+      "interestHint": "The thing that gets you into trouble",
+      "notes": "Notes & Papers",
+      "add": "Add",
+      "remove": "Remove"
+    },
+    "Tab": {
+      "matter": "The Matter",
+      "clues": "Clues",
+      "company": "The Company",
+      "notes": "Notes"
+    },
+    "Die": {
+      "light": "Light",
+      "scholar": "Scholar",
+      "meddle": "Meddle",
+      "notice": "Notice",
+      "failure": "Failure"
+    },
+    "Roll": {
+      "kind": { "investigate": "Investigating", "other": "Doing anything else" },
+      "verb": { "investigate": "investigates", "other": "acts" },
+      "dialogTitle": "{name}: build a pool",
+      "roll": "Roll, and read the highest",
+      "empty": "A pool needs at least one die.",
+      "summaryOne": "One die. Read it as it falls.",
+      "summaryMany": "{count} dice. Read the highest.",
+      "again": "{kind} · a second attempt",
+      "tryAgainAdd": "Try again (add the Notice die)",
+      "tryAgainRoll": "Try again (a Notice roll first)",
+      "callNotice": "Call for a Notice roll",
+      "pool": {
+        "human": "It is within human capability",
+        "humanHint": "A Light die.",
+        "scholar": "It falls within my occupation or scholarly interest",
+        "notice": "I risk my mind",
+        "noticeHint": "The Notice die. If it is highest, a Notice roll follows.",
+        "meddle": "I meddle",
+        "meddleHint": "The Meddle die. If it is highest, or ties, Notice rises."
+      },
+      "line": {
+        "meddleRemarked": "The Meddle die is highest. The meddling was remarked: Notice rises to {notice}.",
+        "meddleRemarkedMax": "The Meddle die is highest. The meddling was remarked, though Notice can rise no further.",
+        "meddleUnremarked": "Another die beats the Meddle die. The meddling went unremarked.",
+        "noticeDie": "The Notice die is highest. A Notice roll follows.",
+        "meddleTie": "The Meddle and Notice dice tie for highest. A Notice roll follows.",
+        "glimpse": "A glimpse of what is really happening. A Notice roll follows.",
+        "gmMayCall": "Something is wrong. The GM may call for a Notice roll."
+      }
+    },
+    "Outcome": {
+      "investigate": {
+        "low": "The bare minimum you need to go on.",
+        "four": "What a competent scholar would find.",
+        "five": "More: a parallel case, a remembered footnote, a local story.",
+        "six": "A glimpse of what is really happening."
+      },
+      "other": {
+        "low": "Fail, or succeed at a cost the GM names.",
+        "four": "Succeed.",
+        "five": "Succeed well.",
+        "six": "Succeed, and notice something wrong."
+      }
+    },
+    "Notice": {
+      "label": "Notice",
+      "set": "Set Notice to {n}",
+      "stage": {
+        "1": { "label": "Unremarked", "text": "Nothing has turned to look at you." },
+        "2": { "label": "Glanced at", "text": "A sense, now and then, of not being quite alone." },
+        "3": { "label": "Regarded", "text": "Something has begun to take an interest." },
+        "4": { "label": "Watched", "text": "It knows where you sleep." },
+        "5": { "label": "Followed", "text": "It is seldom far behind you now." },
+        "6": { "label": "Found", "text": "It knows you. The next time you are alone, it will come." }
+      }
+    },
+    "NoticeRoll": {
+      "title": "{name}: a Notice roll",
+      "reason": {
+        "seen": "Something is wrong",
+        "called": "The GM calls for a Notice roll",
+        "noticeDie": "The Notice die was highest",
+        "glimpse": "A glimpse of what is really happening",
+        "meddleTie": "Meddle and Notice tied for highest",
+        "tryAgain": "The price of trying again"
+      },
+      "rises": "It beats your Notice of {before}. Notice rises to {after}.",
+      "holds": "It does not beat your Notice of {before}. Unremarked, this time.",
+      "max": "Notice is already 6. It can know you no better.",
+      "unease": "Roleplay the unease."
+    },
+    "Meddle": {
+      "heading": "Meddlings",
+      "none": "Nothing disturbed. Yet.",
+      "add": "Note a meddling",
+      "placeholder": "Blowing the whistle; prising up the lid…"
+    },
+    "Banner": {
+      "marked": "It knows you. The next time you are alone, it comes for you.",
+      "visited": "You have suffered the Visit. Whatever your Notice, your epilogue is the worst of them.",
+      "departed": "You have left the story.",
+      "return": "Return to the story"
+    },
+    "Action": {
+      "investigate": "Investigate",
+      "investigateHint": "Search, read, ask, recall",
+      "other": "Anything else",
+      "otherHint": "Climb, run, persuade, endure",
+      "notice": "Notice roll",
+      "noticeHint": "You see something wrong",
+      "leave": "Leave the story"
+    },
+    "Marked": {
+      "kicker": "Notice 6",
+      "text": "It knows you now. The next time you are alone, it will come for you. Stay in company."
+    },
+    "Visit": {
+      "trigger": "The Visit",
+      "kicker": "Alone, at Notice 6",
+      "title": "The Visit: it comes for {name}",
+      "text": "The table plays the scene out. You cannot win it.",
+      "choices": "You may run, hide or endure."
+    },
+    "Failure": {
+      "button": "Failure Die",
+      "kicker": "The Failure Die · proposed by {user}",
+      "beats": "It beats your {highest}. You fail as described.",
+      "holds": "It does not beat your {highest}. Your result stands."
+    },
+    "Leave": {
+      "title": "Leave the story",
+      "confirm": "{name} flees the district, burns the papers, swears never to speak of it. They will be out of the story for good. Leave?",
+      "kicker": "Leaving the story",
+      "falls": "Lower than your Notice of {before}. Notice falls to {after}.",
+      "holds": "Not lower than your Notice of {before}. You carry it away with you."
+    },
+    "Epilogue": {
+      "heading": "Epilogue, were the story to end now",
+      "final": "Epilogue",
+      "untouched": { "label": "Untouched", "text": "Perhaps a little quieter at dinner." },
+      "unwell": { "label": "Never quite well again", "text": "Will not discuss it; sleeps with a light on." },
+      "ruined": { "label": "Ruined", "text": "Gone abroad, hair turned white, or found in the morning." }
+    },
+    "Curio": {
+      "heading": "Curios",
+      "new": "A curious object",
+      "add": "Add a curio",
+      "none": "Nothing carried away.",
+      "origin": "Where it was left",
+      "originHint": "The Templars' preceptory, under the altar stone"
+    },
+    "Haunting": {
+      "kicker": "The Haunting",
+      "namePlaceholder": "The story's name",
+      "maximLabel": "One transgression, one thing.",
+      "maxim": "Build the story around a transgression already made and a single entity tethered to an object or place.",
+      "transgression": "The transgression already made",
+      "transgressionHint": "Who took, opened or disturbed what, and when?",
+      "thing": "The thing",
+      "thingHint": "What it is. Never describe it whole.",
+      "tether": "Its tether",
+      "tetherHint": "The object or place it is bound to.",
+      "restitution": "Restitution",
+      "restitutionHint": "Return the object, finish the interrupted rite, give back what was taken.",
+      "frame": "The narrator's frame",
+      "frameHint": "“My friend never spoke of what happened at Burnstow…”",
+      "emptyEntry": "There is nothing written there yet."
+    },
+    "Escalation": {
+      "heading": "Escalation",
+      "unease": { "label": "Unease", "text": "A small wrongness" },
+      "dread": { "label": "Dread", "text": "Something specific" },
+      "terror": { "label": "Terror", "text": "Alone, and it is near" },
+      "horror": { "label": "Horror", "text": "In the room. Once per story" }
+    },
+    "Rest": {
+      "button": "Lay it to rest",
+      "done": "Laid to rest",
+      "hint": "The only true victory is restitution."
+    },
+    "Glimpse": {
+      "heading": "Glimpses",
+      "hint": "Stay reticent. Never describe it whole.",
+      "placeholder": "A hand; damp linen; hair…"
+    },
+    "Warning": {
+      "heading": "Warnings",
+      "hint": "An inscription, a sexton's remark, a note in a margin, locals who won't come up the lane. Ignoring one is meddling.",
+      "placeholder": "“I shouldn't go digging up there, sir, if I was you.”",
+      "none": "No warnings seeded yet."
+    },
+    "Provenance": {
+      "heading": "Provenance",
+      "hint": "Letters, registers, engravings, a diary, the object itself. Every essential clue must be reachable without meddling; meddling gets there faster, or further.",
+      "titlePlaceholder": "A letter; the parish register; an engraving…",
+      "textPlaceholder": "What it tells them.",
+      "found": "Found",
+      "reveal": "Reveal it to the table",
+      "kicker": "Provenance · {n} of {total}",
+      "untitled": "A discovery"
+    },
+    "Company": {
+      "hint": "Company is safe, so splitting up is always a choice.",
+      "none": "No Investigators yet. Create one from the Actors sidebar.",
+      "open": "Open the notebook",
+      "departed": "Left the story",
+      "visited": "Suffered the Visit",
+      "marked": "Notice 6. Waiting to be alone",
+      "lower": "Lower Notice",
+      "raise": "Raise Notice",
+      "notice": "Notice roll",
+      "noticeHint": "Call for a Notice roll: they have seen something wrong.",
+      "visitHint": "It comes for them, now.",
+      "newStory": "Begin a new story",
+      "newStoryConfirm": "Return every Investigator to Notice 1, with a clean conscience? Their meddlings, Visits and departures are forgotten."
+    },
+    "Principles": {
+      "heading": "At the table",
+      "slow": { "label": "Escalate slowly.", "text": "Unease, dread, terror, horror: the last only once." },
+      "reticent": { "label": "Stay reticent.", "text": "A hand, damp linen, hair, the wrong number of limbs felt in the dark." },
+      "comfort": { "label": "Bracket the horror with comfort.", "text": "Sherry, fussy antiquarian dispute, dry humour." },
+      "bargain": { "label": "Offer a bargain", "text": "when the table is cautious and the story slows." },
+      "clues": { "label": "Keep it legible.", "text": "Players may know the cost when their characters don't." }
+    },
+    "Rules": {
+      "open": "The Rules",
+      "title": "Jamesian Dark: the Rules"
+    },
+    "Settings": {
+      "noticeTies": {
+        "name": "The Notice die wins ties with Light dice",
+        "hint": "By default the Notice die calls for a Notice roll only when it is highest outright, or when it ties the Meddle die for highest. Switch on to have it count whenever it ties for highest."
+      },
+      "playersSetNotice": {
+        "name": "Players may set Notice by hand",
+        "hint": "Let players click the candles on their own sheet. By default only the GM may; the dice do the rest."
+      },
+      "atmosphere": {
+        "name": "Atmosphere",
+        "hint": "The dark draws in around the screen as your Investigator's Notice rises."
+      },
+      "sounds": {
+        "name": "Sounds",
+        "hint": "A latch, somewhere, when your Notice rises."
+      }
+    }
+  }
+}

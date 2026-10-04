@@ -1,0 +1,19 @@
+<section class="jd-page jd-page--curio">
+  <header class="jd-masthead">
+    <div class="jd-cameo jd-cameo--square">
+      <img src="{{item.img}}" alt="{{item.name}}" {{#if editable}}data-action="editImage" data-edit="img"{{/if}}>
+    </div>
+    <div class="jd-ident">
+      <input class="jd-name" type="text" name="name" value="{{item.name}}" {{#unless editable}}disabled{{/unless}}>
+      <label class="jd-field">
+        <span>{{localize "JD.Curio.origin"}}</span>
+        <input type="text" name="system.origin" value="{{system.origin}}" placeholder="{{localize 'JD.Curio.originHint'}}" {{#unless editable}}disabled{{/unless}}>
+      </label>
+    </div>
+  </header>
+  <section class="jd-panel jd-panel--notes">
+    <div class="jd-prose">
+      {{formInput fields.description value=system.description enriched=enrichedDescription toggled=true editable=editable name="system.description"}}
+    </div>
+  </section>
+</section>

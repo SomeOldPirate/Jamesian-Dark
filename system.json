@@ -1,0 +1,73 @@
+{
+  "id": "jamesian-dark",
+  "title": "Jamesian Dark",
+  "description": "<p>Ghost stories in the manner of M. R. James. A one-page hack of Graham Walmsley's Cthulhu Dark: you play bookish people who disturb something that should have been left alone.</p>",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.367"
+  },
+  "authors": [
+    {
+      "name": "Mark",
+      "flags": {}
+    }
+  ],
+  "readme": "README.md",
+  "esmodules": [
+    "module/jamesian-dark.mjs"
+  ],
+  "styles": [
+    "styles/jamesian-dark.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "investigator": {
+        "htmlFields": [
+          "notes"
+        ]
+      },
+      "haunting": {
+        "htmlFields": [
+          "notes"
+        ]
+      }
+    },
+    "Item": {
+      "curio": {
+        "htmlFields": [
+          "description"
+        ]
+      }
+    }
+  },
+  "grid": {
+    "distance": 1,
+    "units": "yd"
+  },
+  "primaryTokenAttribute": "notice",
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "hbs",
+        "json"
+      ],
+      "paths": [
+        "styles",
+        "templates",
+        "lang"
+      ]
+    }
+  },
+  "url": "https://github.com/SomeOldPirate/Jamesian-Dark",
+  "manifest": "https://github.com/SomeOldPirate/Jamesian-Dark/releases/latest/download/system.json",
+  "download": "https://github.com/SomeOldPirate/Jamesian-Dark/releases/latest/download/jamesian-dark.zip"
+}

@@ -1,0 +1,34 @@
+<section class="tab jd-tab {{tab.cssClass}}" data-group="primary" data-tab="company">
+  <p class="jd-hint">{{localize "JD.Company.hint"}}</p>
+  <ul class="jd-company">
+    {{#each company}}
+    <li class="jd-member{{#if marked}} is-marked{{/if}}{{#if departed}} is-departed{{/if}}{{#if visited}} is-visited{{/if}}" data-actor-id="{{id}}">
+      <img class="jd-member__img" src="{{img}}" alt="" data-action="companyOpen" data-tooltip="{{localize 'JD.Company.open'}}">
+      <div class="jd-member__who">
+        <a class="jd-member__name" data-action="companyOpen">{{name}}</a>
+        <span class="jd-member__sub">{{#if occupation}}{{occupation}}{{/if}}{{#if players}} · {{players}}{{/if}}</span>
+        <span class="jd-member__state">
+          {{#if departed}}<i class="fa-solid fa-door-open"></i> {{localize "JD.Company.departed"}} · {{epilogue}}
+          {{else if visited}}<i class="fa-solid fa-door-closed"></i> {{localize "JD.Company.visited"}}
+          {{else if marked}}<i class="fa-solid fa-eye"></i> {{localize "JD.Company.marked"}}
+          {{else}}{{epilogue}}{{/if}}
+        </span>
+      </div>
+      <div class="jd-member__notice">
+        <a data-action="companyStep" data-step="-1" data-tooltip="{{localize 'JD.Company.lower'}}"><i class="fa-solid fa-minus"></i></a>
+        <span class="jd-card__track">{{#each pips}}<span class="jd-pip{{#if on}} is-on{{/if}}"></span>{{/each}}</span>
+        <a data-action="companyStep" data-step="1" data-tooltip="{{localize 'JD.Company.raise'}}"><i class="fa-solid fa-plus"></i></a>
+      </div>
+      <div class="jd-member__controls">
+        <button type="button" data-action="companyNotice" data-tooltip="{{localize 'JD.Company.noticeHint'}}"><i class="fa-solid fa-eye"></i> {{localize "JD.Company.notice"}}</button>
+        {{#unless visited}}<button type="button" class="jd-danger" data-action="companyVisit" data-tooltip="{{localize 'JD.Company.visitHint'}}"><i class="fa-solid fa-door-closed"></i> {{localize "JD.Visit.trigger"}}</button>{{/unless}}
+      </div>
+    </li>
+    {{else}}
+    <li class="jd-empty">{{localize "JD.Company.none"}}</li>
+    {{/each}}
+  </ul>
+  <footer class="jd-company__foot">
+    <button type="button" data-action="newStory"><i class="fa-solid fa-book-open"></i> {{localize "JD.Company.newStory"}}</button>
+  </footer>
+</section>

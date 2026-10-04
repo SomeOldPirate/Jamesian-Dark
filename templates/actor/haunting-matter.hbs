@@ -1,0 +1,45 @@
+<section class="tab jd-tab {{tab.cssClass}}" data-group="primary" data-tab="matter">
+  <p class="jd-maxim"><strong>{{localize "JD.Haunting.maximLabel"}}</strong> {{localize "JD.Haunting.maxim"}}</p>
+
+  <div class="jd-form-grid">
+    <label class="jd-area">
+      <span>{{localize "JD.Haunting.transgression"}}</span>
+      <textarea name="system.transgression" rows="2" placeholder="{{localize 'JD.Haunting.transgressionHint'}}">{{system.transgression}}</textarea>
+    </label>
+    <label class="jd-area">
+      <span>{{localize "JD.Haunting.thing"}}</span>
+      <textarea name="system.thing" rows="2" placeholder="{{localize 'JD.Haunting.thingHint'}}">{{system.thing}}</textarea>
+    </label>
+    <label class="jd-area">
+      <span>{{localize "JD.Haunting.tether"}}</span>
+      <textarea name="system.tether" rows="2" placeholder="{{localize 'JD.Haunting.tetherHint'}}">{{system.tether}}</textarea>
+    </label>
+    <label class="jd-area">
+      <span>{{localize "JD.Haunting.restitution"}}</span>
+      <textarea name="system.restitution" rows="2" placeholder="{{localize 'JD.Haunting.restitutionHint'}}">{{system.restitution}}</textarea>
+    </label>
+  </div>
+
+  <section class="jd-panel">
+    <header class="jd-panel__head">
+      <h3>{{localize "JD.Haunting.frame"}}</h3>
+    </header>
+    <textarea name="system.frame" rows="2" placeholder="{{localize 'JD.Haunting.frameHint'}}">{{system.frame}}</textarea>
+  </section>
+
+  <section class="jd-panel">
+    <header class="jd-panel__head">
+      <h3>{{localize "JD.Glimpse.heading"}}</h3>
+      <a class="jd-panel__control" data-action="listAdd" data-list="glimpses" data-tooltip="{{localize 'JD.Sheet.add'}}"><i class="fa-solid fa-plus"></i></a>
+    </header>
+    <p class="jd-hint">{{localize "JD.Glimpse.hint"}}</p>
+    <ul class="jd-list">
+      {{#each glimpses}}
+      <li class="jd-list__row">
+        <input type="text" data-list="glimpses" data-index="{{index}}" data-prop="text" value="{{text}}" placeholder="{{localize 'JD.Glimpse.placeholder'}}">
+        <a class="jd-list__control" data-action="listRemove" data-list="glimpses" data-index="{{index}}" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>
+      </li>
+      {{/each}}
+    </ul>
+  </section>
+</section>

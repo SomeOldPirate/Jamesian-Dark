@@ -1,0 +1,139 @@
+<section class="jd-page">
+
+  {{!-- Who --}}
+  <header class="jd-masthead">
+    <div class="jd-cameo">
+      <img src="{{actor.img}}" alt="{{actor.name}}" {{#if editable}}data-action="editImage" data-edit="img"{{/if}}>
+    </div>
+    <div class="jd-ident">
+      <input class="jd-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'JD.Sheet.name'}}" {{#unless editable}}disabled{{/unless}}>
+      <label class="jd-field">
+        <span>{{localize "JD.Sheet.occupation"}}</span>
+        <input type="text" name="system.occupation" value="{{system.occupation}}" placeholder="{{localize 'JD.Sheet.occupationHint'}}" {{#unless editable}}disabled{{/unless}}>
+      </label>
+      <label class="jd-field">
+        <span>{{localize "JD.Sheet.interest"}}</span>
+        <input type="text" name="system.interest" value="{{system.interest}}" placeholder="{{localize 'JD.Sheet.interestHint'}}" {{#unless editable}}disabled{{/unless}}>
+      </label>
+    </div>
+  </header>
+
+  {{!-- Notice --}}
+  <section class="jd-notice">
+    <div class="jd-notice__head">
+      <h3>{{localize "JD.Notice.label"}}</h3>
+      <span class="jd-notice__value">{{notice}}<small>/6</small></span>
+    </div>
+    <div class="jd-candles" role="group" aria-label="{{localize 'JD.Notice.label'}} {{notice}}">
+      {{#each candles}}
+      <button type="button" class="jd-candle{{#if out}} is-out{{/if}}" {{#if ../canSetNotice}}data-action="setNotice" data-n="{{n}}" data-tooltip="{{label}}"{{else}}disabled{{/if}} aria-label="{{label}}">
+        <span class="jd-candle__flame"></span>
+        <span class="jd-candle__smoke"></span>
+        <span class="jd-candle__wick"></span>
+        <span class="jd-candle__wax"></span>
+      </button>
+      {{/each}}
+    </div>
+    <p class="jd-notice__stage"><strong>{{stage.label}}.</strong> {{stage.text}}</p>
+  </section>
+
+  {{!-- State of affairs --}}
+  {{#if system.departed}}
+  <div class="jd-banner jd-banner--departed">
+    <i class="fa-solid fa-door-open"></i>
+    <span>{{localize "JD.Banner.departed"}}</span>
+    {{#if isGM}}<button type="button" data-action="returnToStory">{{localize "JD.Banner.return"}}</button>{{/if}}
+  </div>
+  {{else if system.visited}}
+  <div class="jd-banner jd-banner--visited">
+    <i class="fa-solid fa-door-closed"></i>
+    <span>{{localize "JD.Banner.visited"}}</span>
+  </div>
+  {{else if system.marked}}
+  <div class="jd-banner jd-banner--marked">
+    <i class="fa-solid fa-eye"></i>
+    <span>{{localize "JD.Banner.marked"}}</span>
+    {{#if isGM}}<button type="button" data-action="visit">{{localize "JD.Visit.trigger"}}</button>{{/if}}
+  </div>
+  {{/if}}
+
+  {{!-- What you can do --}}
+  {{#if canAct}}
+  <section class="jd-actions">
+    <button type="button" class="jd-act jd-act--primary" data-action="roll" data-kind="investigate">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <span><strong>{{localize "JD.Action.investigate"}}</strong><em>{{localize "JD.Action.investigateHint"}}</em></span>
+    </button>
+    <button type="button" class="jd-act jd-act--primary" data-action="roll" data-kind="other">
+      <i class="fa-solid fa-hand"></i>
+      <span><strong>{{localize "JD.Action.other"}}</strong><em>{{localize "JD.Action.otherHint"}}</em></span>
+    </button>
+    <button type="button" class="jd-act jd-act--dark" data-action="noticeRoll">
+      <i class="fa-solid fa-eye"></i>
+      <span><strong>{{localize "JD.Action.notice"}}</strong><em>{{localize "JD.Action.noticeHint"}}</em></span>
+    </button>
+    <div class="jd-actions__minor">
+      <button type="button" data-action="leave"><i class="fa-solid fa-door-open"></i> {{localize "JD.Action.leave"}}</button>
+    </div>
+  </section>
+  {{/if}}
+
+  <div class="jd-columns">
+    {{!-- Meddlings --}}
+    <section class="jd-panel">
+      <header class="jd-panel__head">
+        <h3>{{localize "JD.Meddle.heading"}}</h3>
+        {{#if editable}}<a class="jd-panel__control" data-action="addTransgression" data-tooltip="{{localize 'JD.Meddle.add'}}"><i class="fa-solid fa-plus"></i></a>{{/if}}
+      </header>
+      {{#if transgressions.length}}
+      <ul class="jd-list">
+        {{#each transgressions}}
+        <li class="jd-list__row">
+          <input type="text" data-list="transgressions" data-index="{{index}}" data-prop="text" value="{{text}}" placeholder="{{localize 'JD.Meddle.placeholder'}}" {{#unless ../editable}}disabled{{/unless}}>
+          {{#if ../editable}}<a class="jd-list__control" data-action="removeTransgression" data-index="{{index}}" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+        </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p class="jd-empty">{{localize "JD.Meddle.none"}}</p>
+      {{/if}}
+    </section>
+
+    {{!-- Curios --}}
+    <section class="jd-panel">
+      <header class="jd-panel__head">
+        <h3>{{localize "JD.Curio.heading"}}</h3>
+        {{#if editable}}<a class="jd-panel__control" data-action="itemCreate" data-tooltip="{{localize 'JD.Curio.add'}}"><i class="fa-solid fa-plus"></i></a>{{/if}}
+      </header>
+      {{#if curios.length}}
+      <ul class="jd-list">
+        {{#each curios}}
+        <li class="jd-list__row" data-item-id="{{id}}">
+          <img class="jd-list__img" src="{{img}}" alt="">
+          <a class="jd-list__text" data-action="itemEdit">{{name}}{{#if system.origin}} <small>{{system.origin}}</small>{{/if}}</a>
+          {{#if ../editable}}<a class="jd-list__control" data-action="itemDelete" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+        </li>
+        {{/each}}
+      </ul>
+      {{else}}
+      <p class="jd-empty">{{localize "JD.Curio.none"}}</p>
+      {{/if}}
+    </section>
+  </div>
+
+  {{!-- Notes --}}
+  <section class="jd-panel jd-panel--notes">
+    <header class="jd-panel__head"><h3>{{localize "JD.Sheet.notes"}}</h3></header>
+    <div class="jd-prose">
+      {{formInput fields.notes value=system.notes enriched=enrichedNotes toggled=true editable=editable name="system.notes"}}
+    </div>
+  </section>
+
+  {{!-- Epilogue --}}
+  <section class="jd-panel jd-epilogue">
+    <header class="jd-panel__head">
+      <h3>{{#if system.departed}}{{localize "JD.Epilogue.final"}}{{else}}{{localize "JD.Epilogue.heading"}}{{/if}}</h3>
+    </header>
+    <p class="jd-epilogue__fate"><strong>{{epilogue.label}}.</strong> {{epilogue.text}}</p>
+  </section>
+</section>

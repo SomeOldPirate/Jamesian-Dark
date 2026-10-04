@@ -1,0 +1,20 @@
+<header class="jd-haunt-head">
+  <div class="jd-haunt-head__top">
+    <img class="jd-haunt-head__img" src="{{actor.img}}" alt="" {{#if editable}}data-action="editImage" data-edit="img"{{/if}}>
+    <div class="jd-haunt-head__title">
+      <span class="jd-kicker">{{localize "JD.Haunting.kicker"}}</span>
+      <input class="jd-name" type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'JD.Haunting.namePlaceholder'}}">
+    </div>
+    <button type="button" class="jd-rest{{#if system.laidToRest}} is-on{{/if}}" data-action="toggleRest" data-tooltip="{{localize 'JD.Rest.hint'}}">
+      <i class="fa-solid fa-dove"></i> {{#if system.laidToRest}}{{localize "JD.Rest.done"}}{{else}}{{localize "JD.Rest.button"}}{{/if}}
+    </button>
+  </div>
+  <div class="jd-escalation" role="group" aria-label="{{localize 'JD.Escalation.heading'}}">
+    {{#each escalation}}
+    <button type="button" class="jd-escalation__step{{#if reached}} is-reached{{/if}}{{#if current}} is-current{{/if}}" data-action="setEscalation" data-i="{{i}}">
+      <strong>{{label}}</strong>
+      <em>{{text}}</em>
+    </button>
+    {{/each}}
+  </div>
+</header>

@@ -1,0 +1,41 @@
+<div class="jd-card jd-card--{{tone}}" data-actor-uuid="{{actorUuid}}">
+  <header class="jd-card__head">
+    {{#if img}}<img class="jd-card__portrait" src="{{img}}" alt="">{{/if}}
+    <div class="jd-card__heading">
+      {{#if kicker}}<div class="jd-card__kicker">{{kicker}}</div>{{/if}}
+      <h3 class="jd-card__title">{{title}}</h3>
+    </div>
+  </header>
+  {{#if quote}}<blockquote class="jd-card__quote">{{quote}}</blockquote>{{/if}}
+  {{#if dice.length}}
+  <div class="jd-dice">
+    {{#each dice}}
+    <figure class="jd-diebox{{#if top}} is-top{{/if}}">
+      <span class="jd-die jd-die--{{type}}" data-face="{{value}}" aria-label="{{label}} {{value}}"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <figcaption>{{label}}</figcaption>
+    </figure>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{#if result}}
+  <div class="jd-card__result">
+    <span class="jd-card__num">{{result.value}}</span>
+    <span class="jd-card__verdict">{{result.text}}</span>
+  </div>
+  {{/if}}
+  {{#each lines}}
+  <p class="jd-card__line{{#if tone}} jd-card__line--{{tone}}{{/if}}">{{#if icon}}<i class="{{icon}}"></i>{{/if}}<span>{{text}}</span></p>
+  {{/each}}
+  {{#if track}}
+  <div class="jd-card__track" aria-label="Notice {{track.value}}">
+    {{#each track.pips}}<span class="jd-pip{{#if on}} is-on{{/if}}{{#if fresh}} is-new{{/if}}"></span>{{/each}}
+  </div>
+  {{/if}}
+  {{#if buttons.length}}
+  <div class="jd-card__buttons">
+    {{#each buttons}}
+    <button type="button" data-jd-action="{{action}}" data-jd-who="{{who}}"><i class="{{icon}}"></i> {{label}}</button>
+    {{/each}}
+  </div>
+  {{/if}}
+</div>

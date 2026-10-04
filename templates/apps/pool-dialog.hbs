@@ -1,0 +1,50 @@
+<div class="jd-pool">
+  <div class="jd-pool__kinds">
+    {{#each kinds}}
+    <label class="jd-seg">
+      <input type="radio" name="kind" value="{{key}}" {{#if checked}}checked{{/if}}>
+      <span><i class="{{icon}}"></i> {{label}}</span>
+    </label>
+    {{/each}}
+  </div>
+
+  <div class="jd-pool__dice">
+    <label class="jd-choice">
+      <input type="checkbox" name="human" {{#if human}}checked{{/if}}>
+      <span class="jd-die jd-die--light" data-face="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="jd-choice__text">
+        <strong>{{localize "JD.Roll.pool.human"}}</strong>
+        <em>{{localize "JD.Roll.pool.humanHint"}}</em>
+      </span>
+    </label>
+
+    <label class="jd-choice">
+      <input type="checkbox" name="scholar" {{#if scholar}}checked{{/if}}>
+      <span class="jd-die jd-die--scholar" data-face="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="jd-choice__text">
+        <strong>{{localize "JD.Roll.pool.scholar"}}</strong>
+        <em>{{#if occupation}}{{occupation}}{{else}}{{localize "JD.Sheet.occupation"}}{{/if}} · {{#if interest}}{{interest}}{{else}}{{localize "JD.Sheet.interest"}}{{/if}}</em>
+      </span>
+    </label>
+
+    <label class="jd-choice jd-choice--notice">
+      <input type="checkbox" name="notice" {{#if notice}}checked{{/if}}>
+      <span class="jd-die jd-die--notice" data-face="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="jd-choice__text">
+        <strong>{{localize "JD.Roll.pool.notice"}}</strong>
+        <em>{{localize "JD.Roll.pool.noticeHint"}}</em>
+      </span>
+    </label>
+
+    <label class="jd-choice jd-choice--meddle">
+      <input type="checkbox" name="meddle" {{#if meddle}}checked{{/if}}>
+      <span class="jd-die jd-die--meddle" data-face="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="jd-choice__text">
+        <strong>{{localize "JD.Roll.pool.meddle"}}</strong>
+        <em>{{localize "JD.Roll.pool.meddleHint"}}</em>
+      </span>
+    </label>
+  </div>
+
+  <p class="jd-pool__summary"></p>
+</div>
