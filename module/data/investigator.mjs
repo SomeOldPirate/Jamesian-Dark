@@ -23,6 +23,8 @@ export default class InvestigatorData extends foundry.abstract.TypeDataModel {
       }),
       // Has the Visit happened? Anyone who suffered it takes the worst epilogue.
       visited: new fields.BooleanField({ initial: false }),
+      // A loose end the scenario names (a likeness never destroyed, say): one epilogue band worse.
+      looseEnd: new fields.BooleanField({ initial: false }),
       // Has this character left the story?
       departed: new fields.BooleanField({ initial: false }),
       // Each distinct transgression counts once: a list kept by hand.
@@ -58,7 +60,7 @@ export default class InvestigatorData extends foundry.abstract.TypeDataModel {
   prepareDerivedData() {
     this.notice.min = JD.noticeMin;
     this.notice.max = JD.noticeMax;
-    this.epilogue = epilogue(this.notice.value, this.visited);
+    this.epilogue = epilogue(this.notice.value, this.visited, this.looseEnd);
     // At Notice 6, the next time you are alone, it comes for you.
     this.marked = (this.notice.value >= JD.noticeMax) && !this.visited && !this.departed;
   }

@@ -22,11 +22,9 @@ assert.deepEqual(r.noticeRollReasons, ["glimpse"]);
 r = R.resolvePool({ light: [2, 3], notice: 5 });
 assert.equal(r.noticeDieHighest, true); assert.deepEqual(r.noticeRollReasons, ["noticeDie"]);
 
-// Notice die ties a Light die: not highest by default, highest with the setting
+// Notice die ties a Light die: no Notice roll
 r = R.resolvePool({ light: [5, 3], notice: 5 });
 assert.equal(r.noticeRoll, false);
-r = R.resolvePool({ light: [5, 3], notice: 5 }, { noticeTies: true });
-assert.equal(r.noticeRoll, true);
 
 // Notice die highest AND a six while investigating: one roll, two reasons
 r = R.resolvePool({ light: [1], notice: 6 }, { kind: "investigate" });
@@ -34,7 +32,13 @@ assert.deepEqual(r.noticeRollReasons, ["noticeDie", "glimpse"]);
 
 // Meddle die highest
 r = R.resolvePool({ light: [2, 3], meddle: 4 });
-assert.equal(r.meddleRemarked, true); assert.equal(r.noticeRoll, false);
+assert.equal(r.meddleRemarked, true); assert.equal(r.meddleRaises, true); assert.equal(r.noticeRoll, false);
+
+// Meddle die highest on a retry of an act that has already counted: remarked, but no second rise
+r = R.resolvePool({ light: [2, 3], meddle: 4 }, { meddleCounted: true });
+assert.equal(r.meddleRemarked, true); assert.equal(r.meddleRaises, false);
+r = R.resolvePool({ light: [1], meddle: 4, notice: 4 }, { meddleCounted: true });
+assert.equal(r.meddleRaises, false); assert.deepEqual(r.noticeRollReasons, ["meddleTie"]);
 
 // Meddle die ties for highest
 r = R.resolvePool({ light: [4, 3], meddle: 4 });
@@ -61,6 +65,8 @@ assert.throws(() => R.resolvePool({}));
 // Notice rolls
 assert.equal(R.noticeRollRises(3, 2), true); assert.equal(R.noticeRollRises(2, 2), false);
 assert.equal(R.noticeRollRises(6, 6), false);
+assert.equal(R.makesNoticeRolls(5), true); assert.equal(R.makesNoticeRolls(6), false);
+assert.equal(R.makesNoticeRolls(4, true), false);
 
 // Leaving
 assert.equal(R.leavingFalls(2, 3), true); assert.equal(R.leavingFalls(3, 3), false);
@@ -74,9 +80,12 @@ assert.equal(R.epilogue(1), "untouched"); assert.equal(R.epilogue(2), "untouched
 assert.equal(R.epilogue(3), "unwell"); assert.equal(R.epilogue(4), "unwell");
 assert.equal(R.epilogue(5), "ruined"); assert.equal(R.epilogue(6), "ruined");
 assert.equal(R.epilogue(1, true), "ruined");
+// A loose end: one band worse, and never beyond the worst
+assert.equal(R.epilogue(2, false, true), "unwell"); assert.equal(R.epilogue(3, false, true), "ruined");
+assert.equal(R.epilogue(6, false, true), "ruined"); assert.equal(R.epilogue(1, true, true), "ruined");
 
 // Trying again
-assert.deepEqual(R.tryAgain({ notice: false }), { addNotice: true, noticeRollFirst: false });
-assert.deepEqual(R.tryAgain({ notice: true }), { addNotice: false, noticeRollFirst: true });
+assert.deepEqual(R.tryAgain({ notice: false }), { addNotice: true });
+assert.deepEqual(R.tryAgain({ notice: true }), { addNotice: false });
 
 console.log("rules: all assertions passed");

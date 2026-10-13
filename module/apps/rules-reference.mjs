@@ -1,5 +1,5 @@
 /**
- * The one-page rules, to hand at the table.
+ * The rules, to hand at the table.
  * @module jamesian-dark/apps/rules-reference
  */
 

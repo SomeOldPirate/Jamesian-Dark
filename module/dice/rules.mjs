@@ -25,11 +25,11 @@ export function band(highest) {
  * @param {number|null} [dice.meddle]    Result of the Meddle die, if it was rolled.
  * @param {object} [options]
  * @param {"investigate"|"other"} [options.kind="other"]
- * @param {boolean} [options.noticeTies=false]       Does the Notice die count as highest when it only ties a Light die?
+ * @param {boolean} [options.meddleCounted=false]    Has this act of meddling already raised Notice, on an earlier attempt?
  * @returns {object}
  */
 export function resolvePool({ light = [], notice = null, meddle = null } = {}, {
-  kind = "other", noticeTies = false
+  kind = "other", meddleCounted = false
 } = {}) {
   const all = [...light];
   if ( notice !== null ) all.push(notice);
@@ -40,15 +40,17 @@ export function resolvePool({ light = [], notice = null, meddle = null } = {}, {
   // Meddling: remarked, and Notice rises, if the Meddle die is highest or ties for highest.
   const meddled = meddle !== null;
   const meddleRemarked = meddled && (meddle === highest);
+  // An act of meddling can raise Notice only once, however many times the roll is retried.
+  const meddleRaises = meddleRemarked && !meddleCounted;
 
-  // The Notice die: highest outright, or tying the Meddle die for highest.
+  // The Notice die: strictly higher than every other die, or tying the Meddle die for highest.
+  // A tie with a Light die does not count.
   const othersThanNotice = [...light, ...(meddled ? [meddle] : [])];
   const bestOther = othersThanNotice.length ? Math.max(...othersThanNotice) : 0;
   const noticed = notice !== null;
   const noticeOutright = noticed && (notice > bestOther);
   const meddleNoticeTie = noticed && meddled && (notice === meddle) && (notice === highest);
-  const noticeTied = noticed && noticeTies && (notice === highest);
-  const noticeDieHighest = noticeOutright || meddleNoticeTie || noticeTied;
+  const noticeDieHighest = noticeOutright || meddleNoticeTie;
 
   // A six while investigating is a glimpse of what is really happening.
   const glimpse = (kind === "investigate") && (highest === 6);
@@ -62,12 +64,22 @@ export function resolvePool({ light = [], notice = null, meddle = null } = {}, {
   return {
     highest,
     band: band(highest),
-    meddled, meddleRemarked,
+    meddled, meddleRemarked, meddleRaises,
     noticeDieHighest, meddleNoticeTie, glimpse,
     noticeRoll, noticeRollReasons,
     // Doing anything else, a six lets the GM call for a Notice roll if none is already due.
     gmMayCall: (kind === "other") && (highest === 6) && !noticeRoll
   };
+}
+
+/**
+ * Does this Investigator still make Notice rolls? Not at Notice 6, and not after the Visit.
+ * @param {number} notice
+ * @param {boolean} [visited=false]
+ * @returns {boolean}
+ */
+export function makesNoticeRolls(notice, visited = false) {
+  return (notice < 6) && !visited;
 }
 
 /**
@@ -103,21 +115,23 @@ export function failureBeats(die, highest) {
 /**
  * Which epilogue a character receives.
  * @param {number} notice
- * @param {boolean} [visited=false]   Anyone who suffered the Visit is ruined, whatever their final Notice.
+ * @param {boolean} [visited=false]     Anyone who suffered the Visit is ruined, whatever their final Notice.
+ * @param {boolean} [looseEnd=false]    A loose end the scenario names moves them one band worse.
  * @returns {"untouched"|"unwell"|"ruined"}
  */
-export function epilogue(notice, visited = false) {
+export function epilogue(notice, visited = false, looseEnd = false) {
   if ( visited || (notice >= 5) ) return "ruined";
-  if ( notice >= 3 ) return "unwell";
-  return "untouched";
+  if ( notice >= 3 ) return looseEnd ? "ruined" : "unwell";
+  return looseEnd ? "unwell" : "untouched";
 }
 
 /**
- * What a "Try again" does to the pool.
+ * What a "Try again" does to the pool: add the Notice die if it was not there, then reroll
+ * every die. Any Notice roll the first result triggered has already been made.
  * @param {object} pool
  * @param {boolean} pool.notice    Was the Notice die in the original pool?
- * @returns {{addNotice: boolean, noticeRollFirst: boolean}}
+ * @returns {{addNotice: boolean}}
  */
 export function tryAgain({ notice }) {
-  return notice ? { addNotice: false, noticeRollFirst: true } : { addNotice: true, noticeRollFirst: false };
+  return { addNotice: !notice };
 }

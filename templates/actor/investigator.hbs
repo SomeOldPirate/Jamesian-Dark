@@ -68,9 +68,9 @@
       <i class="fa-solid fa-hand"></i>
       <span><strong>{{localize "JD.Action.other"}}</strong><em>{{localize "JD.Action.otherHint"}}</em></span>
     </button>
-    <button type="button" class="jd-act jd-act--dark" data-action="noticeRoll">
+    <button type="button" class="jd-act jd-act--dark" data-action="noticeRoll" {{#unless canNoticeRoll}}disabled{{/unless}}>
       <i class="fa-solid fa-eye"></i>
-      <span><strong>{{localize "JD.Action.notice"}}</strong><em>{{localize "JD.Action.noticeHint"}}</em></span>
+      <span><strong>{{localize "JD.Action.notice"}}</strong><em>{{#if canNoticeRoll}}{{localize "JD.Action.noticeHint"}}{{else}}{{localize "JD.Action.noticeNone"}}{{/if}}</em></span>
     </button>
     <div class="jd-actions__minor">
       <button type="button" data-action="leave"><i class="fa-solid fa-door-open"></i> {{localize "JD.Action.leave"}}</button>
@@ -135,5 +135,13 @@
       <h3>{{#if system.departed}}{{localize "JD.Epilogue.final"}}{{else}}{{localize "JD.Epilogue.heading"}}{{/if}}</h3>
     </header>
     <p class="jd-epilogue__fate"><strong>{{epilogue.label}}.</strong> {{epilogue.text}}</p>
+    {{#if isGM}}
+    <label class="jd-epilogue__loose" data-tooltip="{{localize 'JD.Epilogue.looseEndHint'}}">
+      <input type="checkbox" name="system.looseEnd" {{#if system.looseEnd}}checked{{/if}} {{#unless editable}}disabled{{/unless}}>
+      <span>{{localize "JD.Epilogue.looseEnd"}}</span>
+    </label>
+    {{else if system.looseEnd}}
+    <p class="jd-epilogue__loose">{{localize "JD.Epilogue.looseEnd"}}</p>
+    {{/if}}
   </section>
 </section>

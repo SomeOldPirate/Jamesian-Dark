@@ -14,13 +14,16 @@ Each point of Notice snuffs a candle and darkens the page; at 6 the page is nigh
 - **Meddling** adds the Meddle die, and raises Notice by itself if that die is highest or ties. A
   Meddle/Notice tie raises Notice and then makes the Notice roll. The Meddlings list on the sheet is a plain
   list the table keeps by hand.
-- **Notice rolls** happen automatically when the Notice die is highest or an investigation turns up a 6.
-  On a 6 doing anything else, the GM gets a "Call for a Notice roll" button on the card.
-- **Try again** is a button on every roll card: it adds the Notice die, or makes a Notice roll first if the
-  Notice die was already in the pool.
+- **Notice rolls** happen automatically when the Notice die is higher than every other die or an
+  investigation turns up a 6. On a 6 doing anything else, the GM gets a "Call for a Notice roll" button on
+  the card. An Investigator at Notice 6, or one who has suffered the Visit, makes no more Notice rolls.
+- **Try again** is a button on every roll card: it adds the Notice die if it was not in the pool, and rerolls
+  every die. Meddling that has already raised Notice does not raise it again on a second attempt.
 - **Failure Die** is a button anyone at the table can press on a roll that wasn't an investigation, once they
-  have said how the character fails.
+  have said how the character fails. It can be proposed once per roll.
 - **Leave the story** rolls the die, lowers Notice if it should, and shows the epilogue.
+- **A loose end** is a tick the GM sets on an Investigator's epilogue when the scenario says so: one band
+  worse.
 - **The Visit** is a button for the GM, on the sheet banner at Notice 6 and on the Company tab. It posts a
   card and marks the Investigator for the worst epilogue.
 
@@ -39,24 +42,21 @@ as notes for the GM to speak from (a Provenance discovery can also be posted to 
 
 | Setting | Default | |
 |---|---|---|
-| The Notice die wins ties with Light dice | off | See below. |
 | Players may set Notice by hand | off | Otherwise only the GM can click the candles. |
 | Atmosphere (per player) | on | The screen edges darken as your own Investigator's Notice rises. |
 | Sounds (per player) | on | A latch when your Notice rises. |
 
 ## Rulings the system makes
 
-The one-page rules leave a few things open. The system reads them like this:
+The system follows the GM Rules. Where they leave something open, it reads them like this:
 
-1. **Notice die ties.** "If the Notice die is highest" is read as highest outright, or tied with the Meddle die
-   (the one tie the rules spell out). A tie with a Light die does not call for a Notice roll. There is a setting
-   to change this.
-2. **One Notice roll per roll.** If the Notice die is highest *and* it is a 6 while investigating, that is one
-   Notice roll, not two.
-3. **"Each distinct transgression counts once"** is left to the table. The system raises Notice whenever the
-   Meddle die is highest or ties; if that transgression had already counted (on a Try again, say), the GM
-   lowers Notice again.
-4. **Try again when meddling** rerolls the Meddle die with everything else.
+1. **Three-way ties.** If the Meddle die and the Notice die tie for highest and a Light die ties them too,
+   the system still applies both: Notice rises by 1, then a Notice roll.
+2. **"Each transgression counts once"** is tracked only across Try again. A second attempt at the same roll
+   cannot raise Notice for meddling a second time (a Meddle/Notice tie still calls for its Notice roll). A
+   fresh roll is taken to be a fresh act; if it was not, the GM lowers Notice again.
+3. **Group rolls** are not a separate button. Each helper rolls their own pool, which applies their own
+   triggers; the table reads the best card, and proposes the Failure Die on that one.
 
 ## Development
 

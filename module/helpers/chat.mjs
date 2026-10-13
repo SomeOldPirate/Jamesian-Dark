@@ -108,7 +108,8 @@ export function onRenderChatMessage(message, html) {
     const allowed = (who === "gm") ? game.user.isGM
       : (who === "owner") ? !!actor?.isOwner
         : true;
-    if ( !allowed || flags.superseded ) { button.remove(); continue; }
+    const spent = (button.dataset.jdAction === "failureDie") && failureDieUsed(message);
+    if ( !allowed || flags.superseded || spent ) { button.remove(); continue; }
     button.addEventListener("click", event => onCardAction(event, message, actor));
   }
   const bar = card.querySelector(".jd-card__buttons");
@@ -130,7 +131,10 @@ async function onCardAction(event, message, actor) {
     switch ( button.dataset.jdAction ) {
       case "tryAgain": return await actor?.tryAgain(message);
       case "failureDie":
-        return await actor?.failureDie({ highest: message.getFlag(SYSTEM_ID, "highest"), by: game.user });
+        if ( failureDieUsed(message) ) return null;
+        return await actor?.failureDie({
+          highest: message.getFlag(SYSTEM_ID, "highest"), by: game.user, against: message.id
+        });
       case "callNotice":
         await actor?.noticeRoll({ reason: "called" });
         return await updateCard(message, { buttons: withoutButton(message, "callNotice") });
@@ -138,6 +142,30 @@ async function onCardAction(event, message, actor) {
     }
   } finally {
     button.disabled = false;
+  }
+}
+
+/**
+ * Has the Failure Die already been proposed against this roll? It can be proposed once per roll.
+ * @param {ChatMessage} message
+ * @returns {boolean}
+ */
+function failureDieUsed(message) {
+  return game.messages.some(m => m.flags?.[SYSTEM_ID]?.against === message.id);
+}
+
+/**
+ * A Failure Die has been rolled: take its button off the roll it was proposed against,
+ * for everyone, whoever may edit that message.
+ * @param {ChatMessage} message    The Failure Die's own card.
+ */
+export function onCreateChatMessage(message) {
+  const against = message.flags?.[SYSTEM_ID]?.against;
+  if ( !against ) return;
+  for ( const button of document.querySelectorAll(`[data-message-id="${against}"] [data-jd-action="failureDie"]`) ) {
+    const bar = button.closest(".jd-card__buttons");
+    button.remove();
+    if ( bar && !bar.children.length ) bar.remove();
   }
 }
 

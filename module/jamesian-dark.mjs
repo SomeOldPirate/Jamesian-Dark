@@ -91,12 +91,6 @@ Hooks.once("init", () => {
 /* -------------------------------------------- */
 
 function registerSettings() {
-  game.settings.register(SYSTEM_ID, "noticeTies", {
-    name: "JD.Settings.noticeTies.name",
-    hint: "JD.Settings.noticeTies.hint",
-    scope: "world", config: true, type: Boolean, default: false
-  });
-
   game.settings.register(SYSTEM_ID, "playersSetNotice", {
     name: "JD.Settings.playersSetNotice.name",
     hint: "JD.Settings.playersSetNotice.hint",
@@ -130,6 +124,7 @@ Hooks.once("diceSoNiceReady", dice3d => Effects.registerDiceSoNice(dice3d));
 /* -------------------------------------------- */
 
 Hooks.on("renderChatMessageHTML", Chat.onRenderChatMessage);
+Hooks.on("createChatMessage", Chat.onCreateChatMessage);
 
 /* -------------------------------------------- */
 /*  Keeping the GM's view of the company fresh  */

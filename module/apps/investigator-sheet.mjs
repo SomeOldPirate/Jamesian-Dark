@@ -76,6 +76,7 @@ export default class JDInvestigatorSheet extends HandlebarsApplicationMixin(Acto
         text: game.i18n.localize(`JD.Notice.stage.${notice}.text`)
       },
       canAct: this.isEditable && !sys.departed,
+      canNoticeRoll: actor.makesNoticeRolls,
       transgressions: sys.transgressions.map((x, index) => ({ ...x, index })),
       curios: actor.items.filter(i => i.type === "curio").sort((a, b) => a.sort - b.sort),
       epilogue: {

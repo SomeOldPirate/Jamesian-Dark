@@ -67,6 +67,11 @@ export default class JDActor extends Actor {
     return this.system.notice?.value ?? JD.noticeMin;
   }
 
+  /** Does this investigator still make Notice rolls? Not at Notice 6, and not after the Visit. */
+  get makesNoticeRolls() {
+    return this.isInvestigator && Rules.makesNoticeRolls(this.notice, this.system.visited);
+  }
+
   /** Is this an investigator? Most of what follows applies to them alone. */
   get isInvestigator() {
     return this.type === "investigator";
@@ -111,10 +116,12 @@ export default class JDActor extends Actor {
    * @param {boolean} [config.notice=false]    The Notice die: you risk your mind.
    * @param {boolean} [config.meddle=false]    The Meddle die.
    * @param {boolean} [config.reroll=false]    Is this a second attempt?
+   * @param {boolean} [config.meddleCounted=false]   On a second attempt: has this meddling already raised Notice?
    * @returns {Promise<ChatMessage|null>}
    */
   async rollPool({
-    kind = "other", human = true, scholar = false, notice = false, meddle = false, reroll = false
+    kind = "other", human = true, scholar = false, notice = false, meddle = false, reroll = false,
+    meddleCounted = false
   } = {}) {
     if ( !this.isInvestigator ) return null;
     const types = [];
@@ -141,39 +148,48 @@ export default class JDActor extends Actor {
       meddle: valueOf("meddle")
     }, {
       kind,
-      noticeTies: game.settings.get(SYSTEM_ID, "noticeTies")
+      meddleCounted: reroll && meddleCounted
     });
 
-    // Meddling that was remarked raises Notice at once. Whether this transgression has
-    // already counted is for the table to say; the GM can step Notice back.
-    if ( outcome.meddleRemarked && (before < JD.noticeMax) ) await this.update({ "system.notice.value": before + 1 });
+    // Meddling that was remarked raises Notice at once, but only once for each act: a second
+    // attempt at a roll whose meddling has already counted does not raise it again.
+    if ( outcome.meddleRaises && (before < JD.noticeMax) ) await this.update({ "system.notice.value": before + 1 });
     const after = this.notice;
+    // An Investigator at Notice 6 makes no more Notice rolls.
+    const rolls = this.makesNoticeRolls;
 
     // What the card says.
     const lines = [];
     if ( meddle ) {
       if ( outcome.meddleRemarked && (after > before) ) {
         lines.push({ icon: "fa-solid fa-eye", tone: "warn", text: t("JD.Roll.line.meddleRemarked", { notice: after }) });
+      } else if ( outcome.meddleRemarked && !outcome.meddleRaises ) {
+        lines.push({ icon: "fa-solid fa-eye", text: t("JD.Roll.line.meddleCounted") });
       } else if ( outcome.meddleRemarked ) {
         lines.push({ icon: "fa-solid fa-eye", tone: "warn", text: t("JD.Roll.line.meddleRemarkedMax") });
       } else {
         lines.push({ icon: "fa-solid fa-eye-slash", text: t("JD.Roll.line.meddleUnremarked") });
       }
     }
-    for ( const reason of outcome.noticeRollReasons ) {
-      lines.push({ icon: "fa-solid fa-dice-d6", tone: "warn", text: t(`JD.Roll.line.${reason}`) });
+    if ( rolls ) {
+      for ( const reason of outcome.noticeRollReasons ) {
+        lines.push({ icon: "fa-solid fa-dice-d6", tone: "warn", text: t(`JD.Roll.line.${reason}`) });
+      }
+    } else if ( outcome.noticeRoll ) {
+      lines.push({ icon: "fa-solid fa-dice-d6", text: t("JD.Roll.line.noNoticeRoll") });
     }
-    if ( outcome.gmMayCall ) lines.push({ icon: "fa-solid fa-triangle-exclamation", text: t("JD.Roll.line.gmMayCall") });
+    const gmMayCall = outcome.gmMayCall && rolls;
+    if ( gmMayCall ) lines.push({ icon: "fa-solid fa-triangle-exclamation", text: t("JD.Roll.line.gmMayCall") });
 
     const again = Rules.tryAgain({ notice });
     const buttons = [{
       action: "tryAgain", who: "owner", icon: "fa-solid fa-rotate",
-      label: t(again.addNotice ? "JD.Roll.tryAgainAdd" : "JD.Roll.tryAgainRoll")
+      label: t(again.addNotice ? "JD.Roll.tryAgainAdd" : "JD.Roll.tryAgainReroll")
     }];
     if ( kind === "other" ) {
       buttons.push({ action: "failureDie", who: "all", icon: "fa-solid fa-dice-one", label: t("JD.Failure.button") });
     }
-    if ( outcome.gmMayCall ) {
+    if ( gmMayCall ) {
       buttons.push({ action: "callNotice", who: "gm", icon: "fa-solid fa-eye", label: t("JD.Roll.callNotice") });
     }
 
@@ -193,12 +209,12 @@ export default class JDActor extends Actor {
       flags: {
         type: "roll",
         highest: outcome.highest,
-        pool: { kind, human, scholar, notice, meddle }
+        pool: { kind, human, scholar, notice, meddle, meddleCounted: (reroll && meddleCounted) || outcome.meddleRemarked }
       }
     });
 
     // "Notice rises by 1, then make a Notice roll."
-    if ( outcome.noticeRoll ) await this.noticeRoll({ reason: outcome.noticeRollReasons[0], check: false });
+    if ( outcome.noticeRoll && rolls ) await this.noticeRoll({ reason: outcome.noticeRollReasons[0], check: false });
     await this.checkFate(before);
     return message;
   }
@@ -216,6 +232,10 @@ export default class JDActor extends Actor {
    */
   async noticeRoll({ reason = "seen", check = true } = {}) {
     if ( !this.isInvestigator ) return null;
+    if ( !this.makesNoticeRolls ) {
+      ui.notifications.info(t("JD.NoticeRoll.none", { name: this.name }));
+      return null;
+    }
     const before = this.notice;
     const roll = new Roll(`1d6[${t(JD.dice.notice.label)}]`);
     roll.dice[0].options.appearance = { colorset: JD.dice.notice.colorset };
@@ -225,8 +245,7 @@ export default class JDActor extends Actor {
     if ( rises ) await this.update({ "system.notice.value": before + 1 });
 
     const verdict = rises ? t("JD.NoticeRoll.rises", { before, after: before + 1 })
-      : (before >= JD.noticeMax) ? t("JD.NoticeRoll.max")
-        : t("JD.NoticeRoll.holds", { before });
+      : t("JD.NoticeRoll.holds", { before });
     await postCard({
       tone: "notice",
       kicker: t(`JD.NoticeRoll.reason.${reason}`),
@@ -292,7 +311,8 @@ export default class JDActor extends Actor {
       title: t("JD.Visit.title", { name: this.name }),
       lines: [
         { text: t("JD.Visit.text") },
-        { icon: "fa-solid fa-person-running", text: t("JD.Visit.choices") }
+        { icon: "fa-solid fa-person-running", text: t("JD.Visit.choices") },
+        { icon: "fa-solid fa-feather", tone: "coda", text: t("JD.Visit.band") }
       ]
     }, { actor: this, flags: { type: "visit" } });
   }
@@ -302,8 +322,8 @@ export default class JDActor extends Actor {
   /* -------------------------------------------- */
 
   /**
-   * Unhappy with a roll? If you didn't roll the Notice die, add it and reroll.
-   * If you did, make a Notice roll, then reroll everything.
+   * Unhappy with a roll? If you didn't roll the Notice die, add it and reroll every die.
+   * If you did, any Notice roll the result triggered has already been made: reroll every die.
    * @param {ChatMessage} message    The roll being tried again.
    * @returns {Promise<ChatMessage|null>}
    */
@@ -311,8 +331,6 @@ export default class JDActor extends Actor {
     const pool = message.getFlag(SYSTEM_ID, "pool");
     if ( !pool || message.getFlag(SYSTEM_ID, "superseded") ) return null;
     if ( message.canUserModify(game.user, "update") ) await message.setFlag(SYSTEM_ID, "superseded", true);
-    const again = Rules.tryAgain(pool);
-    if ( again.noticeRollFirst ) await this.noticeRoll({ reason: "tryAgain" });
     return this.rollPool({ ...pool, notice: true, reroll: true });
   }
 
@@ -325,9 +343,10 @@ export default class JDActor extends Actor {
    * @param {object} options
    * @param {number} options.highest    The highest die of the roll being contested.
    * @param {User} [options.by]         Who proposed it.
+   * @param {string} [options.against]  The id of the roll's chat message: the Failure Die is proposed once per roll.
    * @returns {Promise<ChatMessage>}
    */
-  async failureDie({ highest = 0, by = game.user } = {}) {
+  async failureDie({ highest = 0, by = game.user, against = null } = {}) {
     const roll = new Roll(`1d6[${t(JD.dice.failure.label)}]`);
     roll.dice[0].options.appearance = { colorset: JD.dice.failure.colorset };
     await roll.evaluate();
@@ -341,7 +360,7 @@ export default class JDActor extends Actor {
         value: roll.total,
         text: t(beats ? "JD.Failure.beats" : "JD.Failure.holds", { highest })
       }
-    }, { actor: this, rolls: [roll], flags: { type: "failure" } });
+    }, { actor: this, rolls: [roll], flags: { type: "failure", against } });
   }
 
   /* -------------------------------------------- */
@@ -358,7 +377,8 @@ export default class JDActor extends Actor {
     const sure = await DialogV2.confirm({
       window: { title: t("JD.Leave.title"), icon: "fa-solid fa-door-open" },
       classes: ["jamesian-dark", "jd-dialog"],
-      content: `<p class="jd-dialog__lede">${t("JD.Leave.confirm", { name: esc(this.name) })}</p>`,
+      content: `<p class="jd-dialog__lede">${t("JD.Leave.confirm", { name: esc(this.name) })}</p>`
+        + (this.system.marked ? `<p class="jd-dialog__lede"><strong>${t("JD.Leave.warnSix")}</strong></p>` : ""),
       rejectClose: false
     });
     if ( !sure ) return null;
@@ -401,6 +421,7 @@ export default class JDActor extends Actor {
       "system.notice.value": JD.noticeMin,
       "system.visited": false,
       "system.departed": false,
+      "system.looseEnd": false,
       "system.transgressions": []
     });
   }
