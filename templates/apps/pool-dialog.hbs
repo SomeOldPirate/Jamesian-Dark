@@ -27,12 +27,12 @@
       </span>
     </label>
 
-    <label class="jd-choice jd-choice--notice">
-      <input type="checkbox" name="notice" {{#if notice}}checked{{/if}}>
+    <label class="jd-choice jd-choice--notice{{#unless noticeAllowed}} is-disabled{{/unless}}">
+      <input type="checkbox" name="notice" {{#if notice}}checked{{/if}} {{#unless noticeAllowed}}disabled{{/unless}}>
       <span class="jd-die jd-die--notice" data-face="5"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
       <span class="jd-choice__text">
         <strong>{{localize "JD.Roll.pool.notice"}}</strong>
-        <em>{{localize "JD.Roll.pool.noticeHint"}}</em>
+        <em>{{#if noticeAllowed}}{{localize "JD.Roll.pool.noticeHint"}}{{else}}{{localize "JD.Roll.pool.noticeAside"}}{{/if}}</em>
       </span>
     </label>
 

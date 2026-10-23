@@ -6,7 +6,7 @@
 
 import JD, { SYSTEM_ID } from "../config.mjs";
 import * as Rules from "../dice/rules.mjs";
-import { promptPool } from "../dice/dialog.mjs";
+import { promptPool, promptVisit } from "../dice/dialog.mjs";
 import { postCard, dieFace, t, esc } from "../helpers/chat.mjs";
 import * as Effects from "../helpers/effects.mjs";
 
@@ -124,6 +124,11 @@ export default class JDActor extends Actor {
     meddleCounted = false
   } = {}) {
     if ( !this.isInvestigator ) return null;
+    // At Notice 6 the Notice die is set aside for good.
+    if ( notice && !Rules.noticeDieAllowed(this.notice) ) {
+      notice = false;
+      ui.notifications.info(t("JD.Roll.noticeSetAside", { name: this.name }));
+    }
     const types = [];
     if ( human ) types.push("light");
     if ( scholar ) types.push("scholar");
@@ -181,11 +186,15 @@ export default class JDActor extends Actor {
     const gmMayCall = outcome.gmMayCall && rolls;
     if ( gmMayCall ) lines.push({ icon: "fa-solid fa-triangle-exclamation", text: t("JD.Roll.line.gmMayCall") });
 
-    const again = Rules.tryAgain({ notice });
-    const buttons = [{
-      action: "tryAgain", who: "owner", icon: "fa-solid fa-rotate",
-      label: t(again.addNotice ? "JD.Roll.tryAgainAdd" : "JD.Roll.tryAgainReroll")
-    }];
+    // Trying again depends on the Notice die, so an Investigator at Notice 6 cannot.
+    const buttons = [];
+    if ( Rules.canTryAgain(after) ) {
+      const again = Rules.tryAgain({ notice });
+      buttons.push({
+        action: "tryAgain", who: "owner", icon: "fa-solid fa-rotate",
+        label: t(again.addNotice ? "JD.Roll.tryAgainAdd" : "JD.Roll.tryAgainReroll")
+      });
+    }
     if ( kind === "other" ) {
       buttons.push({ action: "failureDie", who: "all", icon: "fa-solid fa-dice-one", label: t("JD.Failure.button") });
     }
@@ -313,8 +322,50 @@ export default class JDActor extends Actor {
         { text: t("JD.Visit.text") },
         { icon: "fa-solid fa-person-running", text: t("JD.Visit.choices") },
         { icon: "fa-solid fa-feather", tone: "coda", text: t("JD.Visit.band") }
-      ]
+      ],
+      buttons: [{ action: "visitRoll", who: "owner", icon: "fa-solid fa-person-running", label: t("JD.Visit.roll") }]
     }, { actor: this, flags: { type: "visit" } });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Run, hide or endure: a Light die, plus a second if occupation or interest helps.
+   * No Notice die (it is set aside at 6), no Failure Die, and no trying again.
+   * @param {ChatMessage} [message]   The Visit card this roll answers.
+   * @returns {Promise<ChatMessage|null>}
+   */
+  async promptVisitRoll(message = null) {
+    if ( !this.isInvestigator ) return null;
+    const config = await promptVisit(this);
+    if ( !config ) return null;
+    return this.visitRoll({ ...config, visitOf: message?.id ?? null });
+  }
+
+  /**
+   * Roll the Visit.
+   * @param {object} [options]
+   * @param {boolean} [options.helps=false]    Does occupation or scholarly interest genuinely help?
+   * @param {boolean} [options.struck=false]   Did they strike at the thing rather than run, hide or endure?
+   * @param {string} [options.visitOf]         The id of the Visit card: it is rolled once.
+   * @returns {Promise<ChatMessage>}
+   */
+  async visitRoll({ helps = false, struck = false, visitOf = null } = {}) {
+    const types = helps ? ["light", "scholar"] : ["light"];
+    const roll = new Roll(types.map(type => `1d6[${t(JD.dice[type].label)}]`).join(" + "));
+    roll.dice.forEach((die, i) => die.options.appearance = { colorset: JD.dice[types[i]].colorset });
+    await roll.evaluate();
+    const values = roll.dice.map(d => d.total);
+    const highest = Math.max(...values);
+    const outcome = Rules.visitOutcome(highest, struck);
+    return postCard({
+      tone: "visit",
+      kicker: t(struck ? "JD.Visit.rollStruck" : "JD.Visit.rollKicker"),
+      title: this.name,
+      dice: values.map((v, i) => dieFace(types[i], v, v === highest)),
+      result: { value: highest, text: t(`JD.Visit.outcome.${outcome}`) },
+      lines: [{ icon: "fa-solid fa-feather", tone: "coda", text: t("JD.Visit.band") }]
+    }, { actor: this, rolls: [roll], flags: { type: "visitRoll", visitOf } });
   }
 
   /* -------------------------------------------- */
@@ -330,6 +381,10 @@ export default class JDActor extends Actor {
   async tryAgain(message) {
     const pool = message.getFlag(SYSTEM_ID, "pool");
     if ( !pool || message.getFlag(SYSTEM_ID, "superseded") ) return null;
+    if ( !Rules.canTryAgain(this.notice) ) {
+      ui.notifications.warn(t("JD.Roll.noTryAgain", { name: this.name }));
+      return null;
+    }
     if ( message.canUserModify(game.user, "update") ) await message.setFlag(SYSTEM_ID, "superseded", true);
     return this.rollPool({ ...pool, notice: true, reroll: true });
   }

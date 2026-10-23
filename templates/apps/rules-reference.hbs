@@ -13,7 +13,7 @@
   <ul class="jd-rulebook__dice">
     <li><span class="jd-die jd-die--light" data-face="1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> One Light die if the action is within human capability. Almost every action is.</li>
     <li><span class="jd-die jd-die--scholar" data-face="1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> One Light die if it falls within your occupation or scholarly interest.</li>
-    <li><span class="jd-die jd-die--notice" data-face="1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> The Notice die if you risk your mind: facing, handling or concentrating on something supernatural, or pressing on while frightened. You may also add it by choice.</li>
+    <li><span class="jd-die jd-die--notice" data-face="1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> The Notice die if you risk your mind: facing, handling or concentrating on something supernatural, or pressing on while frightened. You may also add it by choice. Never at Notice 6.</li>
     <li><span class="jd-die jd-die--meddle" data-face="1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> The Meddle die if you meddle.</li>
   </ul>
 
@@ -44,9 +44,10 @@
 
   <h2>Notice</h2>
   <p>Notice runs from 1 to 6 and measures how far the thing has noticed you. It is the only track in the game: it decides how close the thing comes, and how your story ends.</p>
-  <p><strong>The Notice roll.</strong> Roll one die. If it is higher than your current Notice, Notice rises by 1. Otherwise nothing happens. At Notice 6 you make no more Notice rolls.</p>
+  <p><strong>The Notice roll.</strong> Roll one die. If it is higher than your current Notice, Notice rises by 1. Otherwise nothing happens.</p>
   <p>The GM calls for a Notice roll when you witness something wrong: a manifestation, a trace, an object behaving impossibly. One event means one Notice roll per witness; a sound that goes on all night is a single event. Mundane danger, however grim, does not call for one.</p>
   <p>Notice also rises without a roll when the Meddle die is highest or tied for highest (by 1), and when you try to fight the thing (straight to 6). It falls only through Leaving.</p>
+  <p><strong>At Notice 6</strong> the thing has already noticed you. You make no more Notice rolls and set the Notice die aside for good: it is never added to any roll again, for any reason. Because trying again depends on the Notice die, you can no longer try again either. The Meddle die can no longer raise your Notice, so meddling at 6 costs nothing more; the worst has already happened.</p>
 
   <h2>Meddling</h2>
   <p>Meddling is a transgression: the tempting shortcut every James scholar takes. Declare the act, or accept a bargain the GM offers, and add the Meddle die to your roll. It makes success likelier, and it may be what gives you away.</p>
@@ -70,18 +71,18 @@
   <p><strong>Keeping it legible.</strong> The GM offers bargains: “You could prise the lid off. That's meddling.” You may always ask whether an act counts, and the GM answers honestly, every time.</p>
 
   <h2>Failing and trying again</h2>
-  <p><strong>The Failure Die.</strong> After any roll for Doing anything else, anyone at the table may propose that you fail instead. They describe how, and roll one die. If it is higher than your highest die, you fail exactly as described; if it is equal or lower, the roll stands. It can be proposed once per roll, and never against Investigating. If you had chosen to succeed at a cost and the Failure Die then succeeds, the cost is cancelled and you simply fail.</p>
-  <p><strong>Trying again.</strong> After any roll, including one the Failure Die has overturned, you may try again. If the Notice die was not in the pool, add it, then reroll every die. If it was, first make any Notice roll the current result has triggered, then reroll every die. Each attempt is a fresh roll with its own triggers, with one exception: an act of meddling can raise Notice only once, however many times the roll is retried.</p>
+  <p><strong>The Failure Die.</strong> After any roll for Doing anything else, anyone at the table may propose that you fail instead. They describe how, and roll one die. If it is higher than your highest die, you fail exactly as described; if it is equal or lower, the roll stands. It can be proposed once per roll, never against Investigating, and never against the Visit roll: the Visit is already the test. If you had chosen to succeed at a cost and the Failure Die then succeeds, the cost is cancelled and you simply fail.</p>
+  <p><strong>Trying again.</strong> After any roll, including one the Failure Die has overturned, you may try again. If the Notice die was not in the pool, add it, then reroll every die. If it was, first make any Notice roll the current result has triggered, then reroll every die. Each attempt is a fresh roll with its own triggers, and rerolling never cancels anything the earlier roll triggered. At Notice 6 you cannot try again, because you can neither add the Notice die nor make a Notice roll. The one exception is meddling: an act of meddling can raise Notice only once, however many times the roll is retried.</p>
 
   <h2>Working together</h2>
   <p>When two or more Investigators work on the same task, and can plausibly help each other, make one group roll. The GM decides how many can usefully help.</p>
   <ul>
     <li>Each helper builds and rolls their own pool as normal.</li>
     <li>The group's result is the highest die rolled by anyone.</li>
-    <li>Each helper checks the triggers against their own dice only. While investigating, every helper who rolled a 6 makes a Notice roll.</li>
+    <li>Each helper checks the triggers against their own dice only. While investigating, every helper who rolled a 6 makes a Notice roll. As with any roll, no helper makes more than one Notice roll from it.</li>
     <li><strong>Meddling together.</strong> If the task is a transgression, everyone who helps is meddling and adds their Meddle die. You may stand by instead: keeping watch, holding the lamp. Standing by adds no dice and is not meddling, but nobody present is alone.</li>
     <li><strong>Costs and failure.</strong> On a 1–3 doing anything else, the players choose together whether to fail or succeed at a cost; if they can't agree, they fail. A Failure Die must beat the group's highest die; if it does, the whole group fails.</li>
-    <li><strong>Trying again.</strong> The group rerolls together. A helper unwilling to add the Notice die, or to make a Notice roll already due, drops out first.</li>
+    <li><strong>Trying again.</strong> The group rerolls together. A helper unwilling or unable to add the Notice die, or to make a Notice roll already due, such as one at Notice 6, drops out first.</li>
     <li><strong>Competing.</strong> Each rolls their own pool and the highest die wins. On a tie, both reroll.</li>
   </ul>
   <p>At this table, each helper rolls from their own sheet. Read the best card, and propose the Failure Die on that one.</p>
@@ -91,17 +92,18 @@
   <p>Atmosphere and traces can reach anyone. The thing manifests directly, close at hand or by touch, only to someone who is alone. Company is always safe from direct manifestation.</p>
   <p><strong>The Visit.</strong> At Notice 6, the thing comes for you the next time you are alone. If you are alone when you reach 6, it comes at once.</p>
   <ol>
-    <li>Play a short scene. You cannot win. You may run, hide or endure, with a Doing anything else roll that includes the Notice die.</li>
+    <li>Play a short scene. You cannot win. You may run, hide or endure, with a Doing anything else roll: a Light die, plus a second if your occupation or scholarly interest genuinely helps. The Notice die is set aside at 6. Nobody may propose the Failure Die against this roll, and it cannot be tried again.</li>
     <li>On a 4 or more, you survive: you reach company, or dawn comes.</li>
-    <li>On 1–3, you may choose to survive at a cost the GM names. If you choose to fail, you and the GM decide together what remains of you, and play it out in the epilogue.</li>
+    <li>On 1–3, you may choose to survive at a cost the GM names, unless you struck at the thing. If you choose to fail, you and the GM decide together what remains of you, and play it out in the epilogue.</li>
     <li>Either way, you take the worst epilogue band.</li>
   </ol>
-  <p>You suffer the Visit at most once. Afterwards you may keep playing, but make no more Notice rolls. Once the thing is laid to rest, no further Visits happen.</p>
+  <p>You suffer the Visit at most once. Afterwards you may keep playing. The thing can still reach you as at Notice 5 (proximity, when alone), but it never Visits you again. Once the thing is laid to rest, no further Visits happen.</p>
 
   <h2>Fighting, leaving and laying it to rest</h2>
-  <p><strong>Fighting.</strong> Any attempt to harm, restrain or drive off the thing by force achieves nothing, and your Notice goes straight to 6. Running past it, hiding from it or holding a door shut is not fighting: roll Doing anything else with the Notice die. Mundane threats are resolved normally.</p>
+  <p><strong>Fighting.</strong> The thing can be struck at only when it shows itself: as a far-off figure, which anyone may see, or close at hand to someone alone at Notice 5. Any attempt to harm, restrain or drive it off by force achieves nothing, and your Notice goes straight to 6. If you are alone, the Visit begins at once; if not, it comes the next time you are alone. Destroying or defacing the cursed object is never fighting: it is meddling or restitution, as the scenario says. Running past the thing, hiding from it or holding a door shut is not fighting either: roll Doing anything else with the Notice die (unless you are at Notice 6). Mundane threats are resolved normally.</p>
+  <p><strong>Fighting during the Visit.</strong> You may still strike at the thing during the Visit. Roll as enduring, but on 1–3 you cannot choose to survive at a cost: you do not survive, and you and the GM decide together what remains of you.</p>
   <p><strong>Leaving.</strong> You may leave the story at any time by doing something decisive: fleeing the district, burning your notes, swearing never to speak of it. Roll one die; if it is lower than your Notice, Notice falls by 1. You take no further part and go straight to your epilogue. Leaving does not avoid a Visit already due: at Notice 6, if you leave alone you meet the thing on the way. To leave safely, leave in company.</p>
-  <p><strong>Laying it to rest.</strong> Each scenario defines its restitution: returning the object, finishing the rite, burning the likeness on the stone. Attempting it is a Doing anything else roll, usually with the Notice die. On a failure it does not take this time, and you may try again. When it succeeds, the threat ends at once, no further Notice rolls or Visits happen, and each epilogue is set by current Notice.</p>
+  <p><strong>Laying it to rest.</strong> Each scenario defines its restitution: returning the object, finishing the rite, burning the likeness on the stone. Attempting it is a Doing anything else roll, usually with the Notice die (except for anyone at Notice 6). On 1–3 the players choose as usual: the restitution does not take this time and must be attempted again later, or it takes at a cost the GM names. When it succeeds, the threat ends at once, no further Notice rolls or Visits happen, and each epilogue is set by current Notice.</p>
 
   <h2>Epilogues</h2>
   <p>The story ends when the thing is laid to rest, when every Investigator has left, or when the scenario's time runs out. Your Notice at that moment sets your epilogue.</p>
@@ -133,14 +135,19 @@
     <tr><th>Helping with a transgression</th><td>Every helper is meddling. Standing by is not.</td></tr>
     <tr><th>Failure Die against a group roll</th><td>It must beat the group's highest die. If it does, everyone fails.</td></tr>
     <tr><th>The same manifestation continues for hours</th><td>One Notice roll per witness.</td></tr>
-    <tr><th>Investigator at Notice 6</th><td>No more Notice rolls.</td></tr>
+    <tr><th>Investigator at Notice 6</th><td>No more Notice rolls, no Notice die, no trying again. The Meddle die cannot raise Notice.</td></tr>
     <tr><th>Companion is asleep</th><td>The Investigator counts as alone.</td></tr>
     <tr><th>Reaching Notice 6 while alone</th><td>The Visit happens at once.</td></tr>
     <tr><th>Laid to rest before an Investigator at 6 is alone</th><td>No Visit; their epilogue uses Notice 6.</td></tr>
     <tr><th>Leaving alone at Notice 6</th><td>The Visit comes on the way.</td></tr>
+    <tr><th>Failure Die against the Visit roll</th><td>Not allowed.</td></tr>
+    <tr><th>A Visit survivor is alone again</th><td>The thing can reach them as at Notice 5. No second Visit.</td></tr>
     <tr><th>A Visit survivor later leaves</th><td>Still the worst epilogue band.</td></tr>
-    <tr><th>Holding a door, running past, hiding</th><td>Not fighting. Roll with the Notice die.</td></tr>
-    <tr><th>Striking at the thing</th><td>Notice goes to 6.</td></tr>
+    <tr><th>Laying it to rest on a 1–3</th><td>Players choose: it fails for now, or it takes at a cost.</td></tr>
+    <tr><th>Holding a door, running past, hiding</th><td>Not fighting. Roll with the Notice die, unless at Notice 6.</td></tr>
+    <tr><th>Striking at the thing</th><td>Notice goes to 6. If alone, the Visit begins at once.</td></tr>
+    <tr><th>Striking at the thing during the Visit</th><td>Roll as enduring. On 1–3, no surviving at a cost.</td></tr>
+    <tr><th>Destroying or defacing the cursed object</th><td>Not fighting. Meddling or restitution, as the scenario says.</td></tr>
   </table>
 
   {{#if isGM}}

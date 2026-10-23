@@ -23,7 +23,9 @@ export async function promptPool(actor, preset = {}) {
     })),
     human: preset.human ?? true,
     scholar: preset.scholar ?? false,
-    notice: preset.notice ?? false,
+    // At Notice 6 the Notice die is set aside for good.
+    noticeAllowed: actor.notice < JD.noticeMax,
+    notice: (preset.notice ?? false) && (actor.notice < JD.noticeMax),
     meddle: preset.meddle ?? false,
     occupation: actor.system.occupation,
     interest: actor.system.interest
@@ -75,4 +77,33 @@ function activatePool(root) {
   };
   form.addEventListener("change", refresh);
   refresh();
+}
+
+/**
+ * Ask how the Investigator meets the Visit.
+ * @param {Actor} actor
+ * @returns {Promise<{helps: boolean, struck: boolean}|null>}
+ */
+export async function promptVisit(actor) {
+  const content = await renderTemplate(`systems/${SYSTEM_ID}/templates/apps/visit-dialog.hbs`, {
+    occupation: actor.system.occupation,
+    interest: actor.system.interest
+  });
+  return DialogV2.wait({
+    window: { title: game.i18n.format("JD.Visit.dialogTitle", { name: actor.name }), icon: "fa-solid fa-door-closed" },
+    classes: ["jamesian-dark", "jd-dialog", "jd-pool-dialog"],
+    position: { width: 460 },
+    content,
+    buttons: [{
+      action: "roll",
+      label: game.i18n.localize("JD.Roll.roll"),
+      icon: "fa-solid fa-dice-d6",
+      default: true,
+      callback: (event, button) => {
+        const data = new FormDataExtended(button.form).object;
+        return { helps: !!data.helps, struck: !!data.struck };
+      }
+    }],
+    rejectClose: false
+  });
 }

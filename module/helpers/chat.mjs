@@ -108,7 +108,8 @@ export function onRenderChatMessage(message, html) {
     const allowed = (who === "gm") ? game.user.isGM
       : (who === "owner") ? !!actor?.isOwner
         : true;
-    const spent = (button.dataset.jdAction === "failureDie") && failureDieUsed(message);
+    const spent = ((button.dataset.jdAction === "failureDie") && failureDieUsed(message))
+      || ((button.dataset.jdAction === "visitRoll") && visitRolled(message));
     if ( !allowed || flags.superseded || spent ) { button.remove(); continue; }
     button.addEventListener("click", event => onCardAction(event, message, actor));
   }
@@ -135,6 +136,9 @@ async function onCardAction(event, message, actor) {
         return await actor?.failureDie({
           highest: message.getFlag(SYSTEM_ID, "highest"), by: game.user, against: message.id
         });
+      case "visitRoll":
+        if ( visitRolled(message) ) return null;
+        return await actor?.promptVisitRoll(message);
       case "callNotice":
         await actor?.noticeRoll({ reason: "called" });
         return await updateCard(message, { buttons: withoutButton(message, "callNotice") });
@@ -155,14 +159,32 @@ function failureDieUsed(message) {
 }
 
 /**
+ * Has this Visit already been rolled? It comes only once.
+ * @param {ChatMessage} message    The Visit card.
+ * @returns {boolean}
+ */
+function visitRolled(message) {
+  return game.messages.some(m => m.flags?.[SYSTEM_ID]?.visitOf === message.id);
+}
+
+/**
  * A Failure Die has been rolled: take its button off the roll it was proposed against,
  * for everyone, whoever may edit that message.
  * @param {ChatMessage} message    The Failure Die's own card.
  */
 export function onCreateChatMessage(message) {
-  const against = message.flags?.[SYSTEM_ID]?.against;
-  if ( !against ) return;
-  for ( const button of document.querySelectorAll(`[data-message-id="${against}"] [data-jd-action="failureDie"]`) ) {
+  const flags = message.flags?.[SYSTEM_ID] ?? {};
+  if ( flags.against ) removeButtons(flags.against, "failureDie");
+  if ( flags.visitOf ) removeButtons(flags.visitOf, "visitRoll");
+}
+
+/**
+ * Take a spent button off a rendered card, wherever it is shown.
+ * @param {string} messageId
+ * @param {string} action
+ */
+function removeButtons(messageId, action) {
+  for ( const button of document.querySelectorAll(`[data-message-id="${messageId}"] [data-jd-action="${action}"]`) ) {
     const bar = button.closest(".jd-card__buttons");
     button.remove();
     if ( bar && !bar.children.length ) bar.remove();

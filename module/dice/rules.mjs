@@ -126,6 +126,38 @@ export function epilogue(notice, visited = false, looseEnd = false) {
 }
 
 /**
+ * May the Notice die go into a pool? At Notice 6 it is set aside for good: never added to
+ * any roll again, for any reason.
+ * @param {number} notice
+ * @returns {boolean}
+ */
+export function noticeDieAllowed(notice) {
+  return notice < 6;
+}
+
+/**
+ * May this Investigator try again? Trying again depends on the Notice die, so not at Notice 6.
+ * @param {number} notice
+ * @returns {boolean}
+ */
+export function canTryAgain(notice) {
+  return noticeDieAllowed(notice);
+}
+
+/**
+ * Read the Visit roll: a Light die, plus a second if occupation or interest helps.
+ * On a 4 or more you survive. On 1–3 you may survive at a cost the GM names, unless you
+ * struck at the thing, in which case you do not survive.
+ * @param {number} highest
+ * @param {boolean} [struck=false]    Did the Investigator strike at the thing during the Visit?
+ * @returns {"survives"|"cost"|"lost"}
+ */
+export function visitOutcome(highest, struck = false) {
+  if ( highest >= 4 ) return "survives";
+  return struck ? "lost" : "cost";
+}
+
+/**
  * What a "Try again" does to the pool: add the Notice die if it was not there, then reroll
  * every die. Any Notice roll the first result triggered has already been made.
  * @param {object} pool

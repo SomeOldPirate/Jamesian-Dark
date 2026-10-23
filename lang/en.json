@@ -42,18 +42,21 @@
       "tryAgainAdd": "Try again (add the Notice die)",
       "tryAgainReroll": "Try again (reroll every die)",
       "callNotice": "Call for a Notice roll",
+      "noticeSetAside": "At Notice 6 the Notice die is set aside for good. {name} rolls without it.",
+      "noTryAgain": "{name} is at Notice 6 and cannot try again.",
       "pool": {
         "human": "It is within human capability",
         "humanHint": "A Light die.",
         "scholar": "It falls within my occupation or scholarly interest",
         "notice": "I risk my mind",
         "noticeHint": "The Notice die, or add it by choice. If it is higher than every other die, a Notice roll follows.",
+        "noticeAside": "Set aside for good at Notice 6.",
         "meddle": "I meddle",
         "meddleHint": "The Meddle die. If it is highest, or ties, Notice rises."
       },
       "line": {
         "meddleRemarked": "The Meddle die is highest. The meddling was remarked: Notice rises to {notice}.",
-        "meddleRemarkedMax": "The Meddle die is highest. The meddling was remarked, though Notice can rise no further.",
+        "meddleRemarkedMax": "The Meddle die is highest, but at Notice 6 meddling costs nothing more. The worst has already happened.",
         "meddleCounted": "The Meddle die is highest, but this meddling has already been remarked. Notice does not rise again.",
         "meddleUnremarked": "Another die beats the Meddle die. The meddling went unremarked.",
         "noticeDie": "The Notice die is highest. A Notice roll follows.",
@@ -111,7 +114,7 @@
     },
     "Banner": {
       "marked": "It knows you. The next time you are alone, it comes for you.",
-      "visited": "You have suffered the Visit. Whatever your Notice, your epilogue is the worst of them.",
+      "visited": "You have suffered the Visit. It will not come again, though it can still come close when you are alone. Whatever your Notice, your epilogue is the worst of them.",
       "departed": "You have left the story.",
       "return": "Return to the story"
     },
@@ -134,8 +137,25 @@
       "kicker": "Alone, at Notice 6",
       "title": "The Visit: it comes for {name}",
       "text": "Play a short scene. You cannot win it; you may run, hide or endure.",
-      "choices": "Roll Doing anything else, with the Notice die. On a 4 or more you survive: you reach company, or dawn comes. On 1–3 you may survive at a cost the GM names, or fail.",
-      "band": "Either way, your epilogue is the worst band."
+      "choices": "Run, hide or endure: roll a Light die, plus a second if your occupation or interest helps. Nobody may roll the Failure Die against it, and it cannot be tried again.",
+      "band": "Either way, your epilogue is the worst band.",
+      "roll": "Run, hide or endure",
+      "dialogTitle": "{name}: the Visit",
+      "dialogLede": "You cannot win. On a 4 or more you survive; on 1–3 you may survive at a cost the GM names, unless you struck at it.",
+      "pool": {
+        "light": "A Light die",
+        "lightHint": "Always. The Notice die is set aside at 6.",
+        "helps": "My occupation or scholarly interest genuinely helps",
+        "struck": "I strike at it",
+        "struckHint": "Instead of running, hiding or enduring. On 1–3 there is no surviving at a cost."
+      },
+      "rollKicker": "The Visit · run, hide or endure",
+      "rollStruck": "The Visit · striking at it",
+      "outcome": {
+        "survives": "You survive: you reach company, or dawn comes.",
+        "cost": "You may survive at a cost the GM names, or not. If not, you and the GM decide together what remains of you.",
+        "lost": "You struck at it, and cannot survive at a cost. You and the GM decide together what remains of you."
+      }
     },
     "Failure": {
       "button": "Failure Die",
@@ -223,7 +243,7 @@
       "none": "No Investigators yet. Create one from the Actors sidebar.",
       "open": "Open the notebook",
       "departed": "Left the story",
-      "visited": "Suffered the Visit",
+      "visited": "Suffered the Visit. Reachable as at Notice 5",
       "marked": "Notice 6. Waiting to be alone",
       "lower": "Lower Notice",
       "raise": "Raise Notice",

@@ -88,4 +88,13 @@ assert.equal(R.epilogue(6, false, true), "ruined"); assert.equal(R.epilogue(1, t
 assert.deepEqual(R.tryAgain({ notice: false }), { addNotice: true });
 assert.deepEqual(R.tryAgain({ notice: true }), { addNotice: false });
 
+// Notice 6: the Notice die is set aside and nobody may try again
+assert.equal(R.noticeDieAllowed(5), true); assert.equal(R.noticeDieAllowed(6), false);
+assert.equal(R.canTryAgain(5), true); assert.equal(R.canTryAgain(6), false);
+
+// The Visit roll
+assert.equal(R.visitOutcome(4), "survives"); assert.equal(R.visitOutcome(6, true), "survives");
+assert.equal(R.visitOutcome(3), "cost"); assert.equal(R.visitOutcome(1), "cost");
+assert.equal(R.visitOutcome(3, true), "lost"); assert.equal(R.visitOutcome(1, true), "lost");
+
 console.log("rules: all assertions passed");

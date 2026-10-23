@@ -1,6 +1,6 @@
 # Jamesian Dark for Foundry VTT
 
-Ghost stories in the manner of M. R. James: a one-page hack of Graham Walmsley's *Cthulhu Dark*.
+Ghost stories in the manner of M. R. James: a hack of Graham Walmsley's *Cthulhu Dark*.
 Built for Foundry V14 (DataModels, ApplicationV2, DialogV2). No dependencies; Dice So Nice is supported if present.
 
 ## What it does
@@ -17,15 +17,21 @@ Each point of Notice snuffs a candle and darkens the page; at 6 the page is nigh
 - **Notice rolls** happen automatically when the Notice die is higher than every other die or an
   investigation turns up a 6. On a 6 doing anything else, the GM gets a "Call for a Notice roll" button on
   the card. An Investigator at Notice 6, or one who has suffered the Visit, makes no more Notice rolls.
-- **Try again** is a button on every roll card: it adds the Notice die if it was not in the pool, and rerolls
-  every die. Meddling that has already raised Notice does not raise it again on a second attempt.
+- **At Notice 6** the Notice die is set aside for good: the pool dialog greys it out, and Try again is no
+  longer offered. The Meddle die can no longer raise Notice.
+- **Try again** is a button on every roll card below Notice 6: it adds the Notice die if it was not in the
+  pool, and rerolls every die. Meddling that has already raised Notice does not raise it again on a second
+  attempt.
 - **Failure Die** is a button anyone at the table can press on a roll that wasn't an investigation, once they
   have said how the character fails. It can be proposed once per roll.
 - **Leave the story** rolls the die, lowers Notice if it should, and shows the epilogue.
 - **A loose end** is a tick the GM sets on an Investigator's epilogue when the scenario says so: one band
   worse.
 - **The Visit** is a button for the GM, on the sheet banner at Notice 6 and on the Company tab. It posts a
-  card and marks the Investigator for the worst epilogue.
+  card and marks the Investigator for the worst epilogue. The card has a **Run, hide or endure** button for
+  the player: a Light die, plus a second if their occupation or interest helps, and a tick for striking at
+  the thing (then 1–3 means they do not survive). The Visit roll has no Failure Die and no Try again, and
+  can be rolled once.
 
 The system rolls dice and keeps Notice. It leaves the talking to the table: asking whether something is
 meddling, offering a bargain, striking at the thing (the GM clicks the sixth candle), deciding who is alone,
@@ -52,9 +58,9 @@ The system follows the GM Rules. Where they leave something open, it reads them 
 
 1. **Three-way ties.** If the Meddle die and the Notice die tie for highest and a Light die ties them too,
    the system still applies both: Notice rises by 1, then a Notice roll.
-2. **"Each transgression counts once"** is tracked only across Try again. A second attempt at the same roll
-   cannot raise Notice for meddling a second time (a Meddle/Notice tie still calls for its Notice roll). A
-   fresh roll is taken to be a fresh act; if it was not, the GM lowers Notice again.
+2. **"Each transgression counts once"** is tracked only across Try again, as the rules now spell out. A second
+   attempt at the same roll cannot raise Notice for meddling a second time (a Meddle/Notice tie still calls
+   for its Notice roll). A fresh roll is taken to be a fresh act; if it was not, the GM lowers Notice again.
 3. **Group rolls** are not a separate button. Each helper rolls their own pool, which applies their own
    triggers; the table reads the best card, and proposes the Failure Die on that one.
 
