@@ -28,10 +28,11 @@ Each point of Notice snuffs a candle and darkens the page; at 6 the page is nigh
 - **A loose end** is a tick the GM sets on an Investigator's epilogue when the scenario says so: one band
   worse.
 - **The Visit** is a button for the GM, on the sheet banner at Notice 6 and on the Company tab. It posts a
-  card and marks the Investigator for the worst epilogue. The card has a **Run, hide or endure** button for
+  card and marks the Investigator as visited. The card has a **Run, hide or endure** button for
   the player: a Light die, plus a second if their occupation or interest helps, and a tick for striking at
   the thing (then 1–3 means they do not survive). The Visit roll has no Failure Die and no Try again, and
-  can be rolled once.
+  can be rolled once. From then on the epilogue is set by that roll, whatever their Notice: Never quite
+  well again on a 4 or more, Ruined on 1–3 (a loose end can still move a survivor to Ruined).
 
 The system rolls dice and keeps Notice. It leaves the talking to the table: asking whether something is
 meddling, offering a bargain, striking at the thing (the GM clicks the sixth candle), deciding who is alone,
@@ -63,6 +64,8 @@ The system follows the GM Rules. Where they leave something open, it reads them 
    for its Notice roll). A fresh roll is taken to be a fresh act; if it was not, the GM lowers Notice again.
 3. **Group rolls** are not a separate button. Each helper rolls their own pool, which applies their own
    triggers; the table reads the best card, and proposes the Failure Die on that one.
+4. **A loose end after the Visit.** The rules list both as epilogue modifiers. The system applies the Visit
+   first, then the loose end, so a survivor on a 4 or more with a loose end is Ruined.
 
 ## Development
 

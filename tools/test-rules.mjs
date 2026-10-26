@@ -79,10 +79,15 @@ assert.equal(R.failureBeats(5, 4), true); assert.equal(R.failureBeats(4, 4), fal
 assert.equal(R.epilogue(1), "untouched"); assert.equal(R.epilogue(2), "untouched");
 assert.equal(R.epilogue(3), "unwell"); assert.equal(R.epilogue(4), "unwell");
 assert.equal(R.epilogue(5), "ruined"); assert.equal(R.epilogue(6), "ruined");
-assert.equal(R.epilogue(1, true), "ruined");
+// The Visit sets the band whatever the Notice: a 4 or more, Never quite well again; at a cost, Ruined
+assert.equal(R.epilogue(6, "survives"), "unwell"); assert.equal(R.epilogue(1, "survives"), "unwell");
+assert.equal(R.epilogue(1, "cost"), "ruined"); assert.equal(R.epilogue(5, "lost"), "ruined");
+// Before the Visit roll, Notice decides (and it is 6)
+assert.equal(R.epilogue(6, null), "ruined");
 // A loose end: one band worse, and never beyond the worst
 assert.equal(R.epilogue(2, false, true), "unwell"); assert.equal(R.epilogue(3, false, true), "ruined");
-assert.equal(R.epilogue(6, false, true), "ruined"); assert.equal(R.epilogue(1, true, true), "ruined");
+assert.equal(R.epilogue(6, false, true), "ruined"); assert.equal(R.epilogue(1, "cost", true), "ruined");
+assert.equal(R.epilogue(6, "survives", true), "ruined");
 
 // Trying again
 assert.deepEqual(R.tryAgain({ notice: false }), { addNotice: true });

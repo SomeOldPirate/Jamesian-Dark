@@ -358,13 +358,15 @@ export default class JDActor extends Actor {
     const values = roll.dice.map(d => d.total);
     const highest = Math.max(...values);
     const outcome = Rules.visitOutcome(highest, struck);
+    // The Visit now sets the epilogue band, whatever the Investigator's Notice.
+    await this.update({ "system.visited": true, "system.visitOutcome": outcome });
     return postCard({
       tone: "visit",
       kicker: t(struck ? "JD.Visit.rollStruck" : "JD.Visit.rollKicker"),
       title: this.name,
       dice: values.map((v, i) => dieFace(types[i], v, v === highest)),
       result: { value: highest, text: t(`JD.Visit.outcome.${outcome}`) },
-      lines: [{ icon: "fa-solid fa-feather", tone: "coda", text: t("JD.Visit.band") }]
+      lines: [{ icon: "fa-solid fa-feather", tone: "coda", text: t(`JD.Visit.bandAfter.${outcome}`) }]
     }, { actor: this, rolls: [roll], flags: { type: "visitRoll", visitOf } });
   }
 
@@ -475,6 +477,7 @@ export default class JDActor extends Actor {
     return this.update({
       "system.notice.value": JD.noticeMin,
       "system.visited": false,
+      "system.visitOutcome": "",
       "system.departed": false,
       "system.looseEnd": false,
       "system.transgressions": []
