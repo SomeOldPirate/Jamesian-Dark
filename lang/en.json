@@ -205,7 +205,9 @@
       "tether": "Its tether",
       "tetherHint": "The object or place it is bound to.",
       "restitution": "Restitution",
-      "restitutionHint": "Return the object, finish the interrupted rite, give back what was taken.",
+      "restitutionHint": "Exactly what lays it to rest, and what any loose end costs.",
+      "lure": "How it draws people apart",
+      "lureHint": "If it does: a voice, a familiar figure, a sound that needs investigating.",
       "frame": "The narrator's frame",
       "frameHint": "“My friend never spoke of what happened at Burnstow…”",
       "emptyEntry": "There is nothing written there yet."
@@ -233,9 +235,16 @@
       "placeholder": "“I shouldn't go digging up there, sir, if I was you.”",
       "none": "No warnings seeded yet."
     },
+    "Bargain": {
+      "heading": "Bargains",
+      "hint": "Meddling shortcuts you can offer when the table stalls, and what each one gets them. Name the cost when you offer it. Solitude can be offered the same way.",
+      "placeholder": "“You could prise the lid off: that's meddling.”",
+      "gainPlaceholder": "What it gets them",
+      "none": "No bargains written yet."
+    },
     "Provenance": {
       "heading": "Provenance",
-      "hint": "Letters, registers, engravings, a diary, the object itself. Every essential clue must be reachable without meddling; meddling gets there faster, or further.",
+      "hint": "About six: letters, registers, engravings, a diary, the object itself. Give each a safe route and, where it suits, a faster or fuller meddling route. Every essential clue must be reachable without meddling.",
       "titlePlaceholder": "A letter; the parish register; an engraving…",
       "textPlaceholder": "What it tells them.",
       "found": "Found",

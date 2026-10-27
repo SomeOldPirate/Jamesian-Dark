@@ -22,12 +22,16 @@ export default class HauntingData extends foundry.abstract.TypeDataModel {
       thing: text(),
       tether: text(),
       restitution: text(),
+      // How the thing draws people apart, if it does: a voice, a familiar figure…
+      lure: text(),
       // Optional frame: a narrator, years later.
       frame: text(),
       // Unease, dread, terror, horror.
       escalation: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0, max: 3 }),
       laidToRest: new fields.BooleanField({ initial: false }),
       warnings: new fields.ArrayField(new fields.SchemaField({ id: id(), text: text() })),
+      // Meddling shortcuts the GM can offer, and what each one gets them.
+      bargains: new fields.ArrayField(new fields.SchemaField({ id: id(), text: text(), gain: text() })),
       provenance: new fields.ArrayField(new fields.SchemaField({
         id: id(), title: text(), text: text(),
         found: new fields.BooleanField({ initial: false })

@@ -38,8 +38,9 @@ The system rolls dice and keeps Notice. It leaves the talking to the table: aski
 meddling, offering a bargain, striking at the thing (the GM clicks the sixth candle), deciding who is alone,
 and telling the epilogues.
 
-**The Haunting** is the GM's sheet for one story: the transgression, the thing, its tether and the restitution;
-an escalation ladder (unease, dread, terror, horror); warnings, six Provenance discoveries and glimpses, kept
+**The Haunting** is the GM's sheet for one story: the transgression, the thing, its tether, the restitution,
+how it draws people apart and the narrator's frame; an escalation ladder (unease, dread, terror, horror);
+warnings, bargains (meddling shortcuts and what each gets), six Provenance discoveries and glimpses, kept
 as notes for the GM to speak from (a Provenance discovery can also be posted to chat, as a handout); and
 **The Company**, a live view of every Investigator with one-click Notice rolls, Notice up and down, and the Visit.
 

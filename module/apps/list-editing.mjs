@@ -1,5 +1,5 @@
 /**
- * Editing arrays of small records on a sheet (transgressions, warnings, provenance…).
+ * Editing arrays of small records on a sheet (warnings, bargains, provenance…).
  *
  * Inputs for list entries carry no `name`, so the sheet's form never submits them.
  * Instead each has `data-list`, `data-index` and `data-prop`, and a change writes

@@ -19,6 +19,25 @@
 
   <section class="jd-panel">
     <header class="jd-panel__head">
+      <h3>{{localize "JD.Bargain.heading"}}</h3>
+      <a class="jd-panel__control" data-action="listAdd" data-list="bargains" data-tooltip="{{localize 'JD.Sheet.add'}}"><i class="fa-solid fa-plus"></i></a>
+    </header>
+    <p class="jd-hint">{{localize "JD.Bargain.hint"}}</p>
+    <ul class="jd-list">
+      {{#each bargains}}
+      <li class="jd-list__row jd-bargain">
+        <input type="text" class="jd-bargain__shortcut" data-list="bargains" data-index="{{index}}" data-prop="text" value="{{text}}" placeholder="{{localize 'JD.Bargain.placeholder'}}">
+        <input type="text" class="jd-bargain__gain" data-list="bargains" data-index="{{index}}" data-prop="gain" value="{{gain}}" placeholder="{{localize 'JD.Bargain.gainPlaceholder'}}">
+        <a class="jd-list__control" data-action="listRemove" data-list="bargains" data-index="{{index}}" data-tooltip="{{localize 'JD.Sheet.remove'}}"><i class="fa-solid fa-xmark"></i></a>
+      </li>
+      {{else}}
+      <li class="jd-empty">{{localize "JD.Bargain.none"}}</li>
+      {{/each}}
+    </ul>
+  </section>
+
+  <section class="jd-panel">
+    <header class="jd-panel__head">
       <h3>{{localize "JD.Provenance.heading"}} <small>{{system.provenanceFound}} / {{provenance.length}}</small></h3>
       <a class="jd-panel__control" data-action="listAdd" data-list="provenance" data-tooltip="{{localize 'JD.Sheet.add'}}"><i class="fa-solid fa-plus"></i></a>
     </header>

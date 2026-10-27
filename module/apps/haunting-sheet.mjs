@@ -1,6 +1,6 @@
 /**
  * The Haunting sheet: the Game Master's black book for one story.
- * One transgression, one thing; warnings, provenance, glimpses; and the company.
+ * One transgression, one thing; warnings, bargains, provenance, glimpses; and the company.
  * @module jamesian-dark/apps/haunting-sheet
  */
 
@@ -89,6 +89,7 @@ export default class JDHauntingSheet extends HandlebarsApplicationMixin(ActorShe
         current: i === sys.escalation
       })),
       warnings: indexed("warnings"),
+      bargains: indexed("bargains"),
       provenance: indexed("provenance"),
       glimpses: indexed("glimpses"),
       company: this.#prepareCompany(),

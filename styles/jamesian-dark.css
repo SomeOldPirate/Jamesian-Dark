@@ -512,6 +512,8 @@
 .jd-list__text small { display: block; color: var(--jd-ink-soft); font-size: 12px; font-style: italic; }
 .jd-list__img { flex: 0 0 26px; width: 26px; height: 26px; border: 1px solid var(--jd-rule); border-radius: 2px; object-fit: cover; }
 .jd-list__control { flex: 0 0 auto; color: var(--jd-ink-soft); font-size: 13px; }
+.jd-bargain__shortcut { flex: 3 1 0; min-width: 0; }
+.jd-bargain__gain { flex: 2 1 0; min-width: 0; }
 
 .jd-prose { min-height: 70px; }
 .jd-prose prose-mirror { min-height: 70px; color: var(--jd-ink); font-family: var(--jd-serif); font-size: 16px; }
