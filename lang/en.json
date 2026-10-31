@@ -114,7 +114,7 @@
     },
     "Banner": {
       "marked": "It knows you. The next time you are alone, it comes for you.",
-      "visited": "You have suffered the Visit. It will not come again, though it can still come close when you are alone. Whatever your Notice, your epilogue is set by how you came through it.",
+      "visited": "You have suffered the Visit. It will not come again, though it can still come close when you are alone. If you survived it only at a cost, you are ruined, whatever your Notice.",
       "departed": "You have left the story.",
       "return": "Return to the story"
     },
@@ -138,10 +138,10 @@
       "title": "The Visit: it comes for {name}",
       "text": "Play a short scene. You cannot win it; you may run, hide or endure.",
       "choices": "Run, hide or endure: roll a Light die, plus a second if your occupation or interest helps. Nobody may roll the Failure Die against it, and it cannot be tried again.",
-      "band": "From now on your epilogue is set by how you survive, not by your Notice: Never quite well again on a 4 or more, Ruined at a cost.",
+      "band": "Survive on a 4 or more and your Notice sets your epilogue as usual. Survive at a cost and you are Ruined, whatever happens next.",
       "bandAfter": {
-        "survives": "Whatever your Notice, your epilogue is Never quite well again.",
-        "cost": "Whether or not you take the cost, your epilogue is Ruined, whatever your Notice.",
+        "survives": "Your Notice sets your epilogue as usual: only surviving at a cost would have ruined you.",
+        "cost": "Whether or not you take the cost, your epilogue is Ruined, whatever happens next.",
         "lost": "Your epilogue is Ruined, and you and the GM decide what that means."
       },
       "roll": "Run, hide or endure",

@@ -75,18 +75,18 @@ assert.equal(R.leavingFalls(1, 1), false);
 // Failure die
 assert.equal(R.failureBeats(5, 4), true); assert.equal(R.failureBeats(4, 4), false);
 
-// Epilogues
+// Epilogues: Notice alone never ruins anyone
 assert.equal(R.epilogue(1), "untouched"); assert.equal(R.epilogue(2), "untouched");
 assert.equal(R.epilogue(3), "unwell"); assert.equal(R.epilogue(4), "unwell");
-assert.equal(R.epilogue(5), "ruined"); assert.equal(R.epilogue(6), "ruined");
-// The Visit sets the band whatever the Notice: a 4 or more, Never quite well again; at a cost, Ruined
-assert.equal(R.epilogue(6, "survives"), "unwell"); assert.equal(R.epilogue(1, "survives"), "unwell");
+assert.equal(R.epilogue(5), "unwell"); assert.equal(R.epilogue(6), "unwell");
+// The Visit: survived at a cost (or not at all) is Ruined whatever the Notice; on a 4 or more, Notice decides
+assert.equal(R.epilogue(6, "survives"), "unwell"); assert.equal(R.epilogue(2, "survives"), "untouched");
 assert.equal(R.epilogue(1, "cost"), "ruined"); assert.equal(R.epilogue(5, "lost"), "ruined");
-// Before the Visit roll, Notice decides (and it is 6)
-assert.equal(R.epilogue(6, null), "ruined");
+// Before the Visit roll, Notice decides
+assert.equal(R.epilogue(6, null), "unwell");
 // A loose end: one band worse, and never beyond the worst
-assert.equal(R.epilogue(2, false, true), "unwell"); assert.equal(R.epilogue(3, false, true), "ruined");
-assert.equal(R.epilogue(6, false, true), "ruined"); assert.equal(R.epilogue(1, "cost", true), "ruined");
+assert.equal(R.epilogue(2, null, true), "unwell"); assert.equal(R.epilogue(3, null, true), "ruined");
+assert.equal(R.epilogue(6, null, true), "ruined"); assert.equal(R.epilogue(1, "cost", true), "ruined");
 assert.equal(R.epilogue(6, "survives", true), "ruined");
 
 // Trying again

@@ -21,7 +21,7 @@ export default class InvestigatorData extends foundry.abstract.TypeDataModel {
           initial: JD.noticeMin, min: JD.noticeMin, max: JD.noticeMax
         })
       }),
-      // Has the Visit happened? Anyone who suffered it has their epilogue set by how they came through.
+      // Has the Visit happened? Surviving it only at a cost (or not at all) ruins an Investigator.
       visited: new fields.BooleanField({ initial: false }),
       // How the Visit roll came out: "survives", "cost" or "lost"; blank until it is rolled.
       visitOutcome: new fields.StringField({ required: true, blank: true, initial: "" }),

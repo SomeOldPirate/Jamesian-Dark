@@ -115,18 +115,17 @@ export function failureBeats(die, highest) {
 /**
  * Which epilogue a character receives.
  * @param {number} notice
+ * Notice alone never ruins anyone: 1–2 is Untouched, 3–6 Never quite well again. Ruined comes
+ * only from the Visit (survived at a cost, or not survived) or a loose end the scenario names.
  * @param {null|"survives"|"cost"|"lost"} [visit=null]   How they came through the Visit, if they suffered it.
- *   The Visit sets the band whatever their Notice: Never quite well again on a 4 or more, Ruined
- *   at a cost (or worse). Until the Visit roll is made, Notice decides.
+ *   At a cost (or not at all) they are Ruined, even if Notice later falls; on a 4 or more, Notice decides.
  * @param {boolean} [looseEnd=false]    A loose end the scenario names moves them one band worse.
  * @returns {"untouched"|"unwell"|"ruined"}
  */
 export function epilogue(notice, visit = null, looseEnd = false) {
   const bands = ["untouched", "unwell", "ruined"];
-  let i;
-  if ( visit === "survives" ) i = 1;
-  else if ( (visit === "cost") || (visit === "lost") ) i = 2;
-  else i = (notice >= 5) ? 2 : (notice >= 3) ? 1 : 0;
+  let i = (notice >= 3) ? 1 : 0;
+  if ( (visit === "cost") || (visit === "lost") ) i = 2;
   if ( looseEnd ) i = Math.min(i + 1, 2);
   return bands[i];
 }
